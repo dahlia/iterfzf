@@ -68,6 +68,8 @@ def iterfzf(
             if e.errno != errno.EPIPE:
                 raise
             break
+    if proc is None or proc.wait() != 0:
+        return None
     try:
         stdin.close()
     except IOError as e:
