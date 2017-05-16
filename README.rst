@@ -1,6 +1,9 @@
 ``iterfzf``: Pythonic interface to ``fzf``
 ==========================================
 
+Supports Python 2.6, 2.7, 3.3 or higher.
+
+
 ``iterfzf.iterfzf(iterable, **options)``
 ----------------------------------------
 
