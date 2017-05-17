@@ -4,7 +4,14 @@ import errno
 import subprocess
 import sys
 
-__all__ = 'iterfzf',
+from pkg_resources import resource_exists, resource_filename
+
+__all__ = 'BUNDLED_EXECUTABLE', 'iterfzf'
+
+EXECUTABLE_NAME = 'fzf.exe' if sys.platform == 'win32' else 'fzf'
+BUNDLED_EXECUTABLE = (resource_filename(__name__, EXECUTABLE_NAME)
+                      if resource_exists(__name__, EXECUTABLE_NAME)
+                      else None)
 
 
 def iterfzf(
@@ -16,7 +23,7 @@ def iterfzf(
     # Layout:
     prompt='> ',
     # Misc:
-    query='', encoding=None, executable='fzf'
+    query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
 ):
     cmd = [executable, '--no-sort', '--prompt=' + prompt]
     if not extended:

@@ -3,3 +3,8 @@
 .*.swp
 .tox/
 __pycache__/
+build/
+dist/
+fzf-*-release.json
+iterfzf/fzf
+iterfzf/fzf.exe

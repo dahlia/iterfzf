@@ -1,6 +1,34 @@
+import distutils.core
+import distutils.errors
+import json
+import os
 import os.path
+import re
+import shutil
+import tarfile
+import tempfile
+try:
+    import urllib2
+except ImportError:
+    from urllib import request as urllib2
+import warnings
+import zipfile
 
 from setuptools import setup
+
+
+fzf_version = '0.16.7'
+version = '0.1.' + fzf_version
+release_url = ('https://api.github.com/repos/junegunn/fzf-bin/releases/tags/' +
+               fzf_version)
+asset_filename_re = re.compile(
+    r'^fzf-(?P<ver>\d+\.\d+\.\d+)-'
+    r'(?P<plat>[^-]+)_(?P<arch>[^.]+)'
+    r'.(?P<ext>tgz|tar\.gz|tar\.bz2|zip)$'
+)
+fzf_bin_path = os.path.join(os.path.dirname(__file__), 'iterfzf', 'fzf')
+fzf_windows_bin_path = os.path.join(os.path.dirname(__file__),
+                                    'iterfzf', 'fzf.exe')
 
 
 def readme():
@@ -12,8 +40,189 @@ def readme():
         pass
 
 
+def get_fzf_release():
+    filename = 'fzf-{0}-release.json'.format(fzf_version)
+    filepath = os.path.join(os.path.dirname(__file__), filename)
+    try:
+        with open(filepath) as f:
+            d = f.read()
+    except IOError:
+        r = urllib2.urlopen(release_url)
+        d = r.read()
+        r.close()
+        mode = 'w' + ('b' if isinstance(d, bytes) else '')
+        try:
+            with open(filename, mode) as f:
+                f.write(d)
+        except IOError:
+            pass
+    try:
+        return json.loads(d)
+    except TypeError:
+        return json.loads(d.decode('utf-8'))
+
+
+def get_fzf_binary_url(plat, arch):
+    release = get_fzf_release()
+    for asset in release['assets']:
+        m = asset_filename_re.match(asset['name'])
+        if not m:
+            warnings.warn('unmatched filename: ' + repr(asset['name']))
+            continue
+        elif m.group('ver') != fzf_version:
+            warnings.warn('unmatched version: ' + repr(asset['name']))
+            continue
+        elif m.group('plat') == plat and m.group('arch') == arch:
+            return asset['browser_download_url'], m.group('ext')
+
+
+def extract(stream, ext, extract_to):
+    with tempfile.NamedTemporaryFile() as tmp:
+        shutil.copyfileobj(stream, tmp)
+        tmp.flush()
+        tmp.seek(0)
+        if ext == 'zip':
+            z = zipfile.ZipFile(tmp, 'r')
+            try:
+                info, = z.infolist()
+                with open(extract_to, 'wb') as f:
+                    f.write(z.read(info))
+            finally:
+                z.close()
+        elif ext == 'tgz' or ext.startswith('tar.'):
+            tar = tarfile.open(fileobj=tmp)
+            try:
+                member, = [m for m in tar.getmembers() if m.isfile()]
+                rf = tar.extractfile(member)
+                with open(extract_to, 'wb') as wf:
+                    shutil.copyfileobj(rf, wf)
+            finally:
+                tar.close()
+        else:
+            raise ValueError('unsupported file format: ' + repr(ext))
+
+
+def download_fzf_binary(plat, arch, overwrite=False):
+    bin_path = fzf_windows_bin_path if plat == 'windows' else fzf_bin_path
+    if overwrite or not os.path.isfile(bin_path):
+        asset = get_fzf_binary_url(plat, arch)
+        url, ext = asset
+        r = urllib2.urlopen(url)
+        extract(r, ext, bin_path)
+        r.close()
+    mode = os.stat(bin_path).st_mode
+    if not (mode & 0o111):
+        os.chmod(bin_path, mode | 0o111)
+
+
+class bundle_fzf(distutils.core.Command):
+
+    description = 'download and bundle a fzf binary'
+    user_options = [
+        ('plat=', 'p', 'platform e.g. windows, linux, freebsd, darwin'),
+        ('arch=', 'a', 'architecture e.g. 386, amd64, arm8'),
+        ('no-overwrite', 'O', 'do not overwrite if fzf binary exists'),
+    ]
+    boolean_options = ['no-overwrite']
+
+    def initialize_options(self):
+        self.plat = None
+        self.arch = None
+        self.no_overwrite = None
+        self.plat_name = None
+
+    def finalize_options(self):
+        if self.plat is None:
+            raise distutils.errors.DistutilsOptionError(
+                '-p/--plat option is required but missing'
+            )
+        if self.arch is None:
+            raise distutils.errors.DistutilsOptionError(
+                '-a/--arch option is required but missing'
+            )
+        try:
+            self.plat_name = self.get_plat_name()
+        except ValueError as e:
+            raise distutils.errors.DistutilsOptionError(str(e))
+        distutils.log.info('plat_name: %s', self.plat_name)
+
+    def get_plat_name(self, plat=None, arch=None):
+        plat = plat or self.plat
+        arch = arch or self.arch
+        if plat == 'linux':
+            arch_tags = {
+                '386': 'i686', 'amd64': 'x86_64',
+                'arm5': 'armv5l', 'arm6': 'armv6l',
+                'arm7': 'armv7l', 'arm8': 'armv8l',
+            }
+            try:
+                arch_tag = arch_tags[arch]
+            except KeyError:
+                raise ValueError('unsupported arch: ' + repr(arch))
+            return 'manylinux1_' + arch_tag
+        elif plat in ('freebsd', 'openbsd'):
+            arch_tags = {'386': 'i386', 'amd64': 'amd64'}
+            try:
+                arch_tag = arch_tags[arch]
+            except KeyError:
+                raise ValueError('unsupported arch: ' + repr(arch))
+            return '{0}_{1}'.format(plat, arch_tag)
+        elif plat == 'darwin':
+            if arch == '386':
+                archs = 'i386',
+            elif arch == 'amd64':
+                archs = 'intel', 'x86_64'
+            else:
+                raise ValueError('unsupported arch: ' + repr(arch))
+            macs = 10, 11, 12
+            return '.'.join('macosx_10_{0}_{1}'.format(mac, arch)
+                            for mac in macs for arch in archs)
+        elif plat == 'windows':
+            if arch == '386':
+                return 'win32'
+            elif arch == 'amd64':
+                return 'win_amd64'
+            else:
+                raise ValueError('unsupported arch: ' + repr(arch))
+        else:
+            raise ValueError('unsupported plat: ' + repr(plat))
+
+    def run(self):
+        dist = self.distribution
+        try:
+            bdist_wheel = dist.command_options['bdist_wheel']
+        except KeyError:
+            self.warn(
+                'this comamnd is intended to be used together with bdist_wheel'
+                ' (e.g. "{0} {1} bdist_wheel")'.format(
+                    dist.script_name, ' '.join(dist.script_args)
+                )
+            )
+        else:
+            typename = type(self).__name__
+            bdist_wheel.setdefault('universal', (typename, True))
+            plat_name = self.plat_name
+            bdist_wheel.setdefault('plat_name', (typename, plat_name))
+            bdist_wheel_cls = dist.cmdclass['bdist_wheel']
+            get_tag_orig = bdist_wheel_cls.get_tag
+
+            def get_tag(self):  # monkeypatch bdist_wheel.get_tag()
+                if self.plat_name_supplied and self.plat_name == plat_name:
+                    return get_tag_orig(self)[:2] + (plat_name,)
+                return get_tag_orig(self)
+            bdist_wheel_cls.get_tag = get_tag
+            download_fzf_binary(self.plat, self.arch,
+                                overwrite=not self.no_overwrite)
+            if dist.package_data is None:
+                dist.package_data = {}
+            dist.package_data.setdefault('iterfzf', []).append(
+                'fzf.exe' if self.plat == 'windows' else 'fzf'
+            )
+
+
 setup(
     name='iterfzf',
+    version=version,
     description='Pythonic interface to fzf',
     long_description=readme(),
     url='https://github.com/dahlia/iterfzf',
@@ -21,7 +230,9 @@ setup(
     author_email='hong.minhee' '@' 'gmail.com',
     license='GPLv3 or later',
     packages=['iterfzf'],
+    cmdclass={'bundle_fzf': bundle_fzf},
     python_requires='>=2.6.0',
+    install_requires=['setuptools'],
     keywords='fzf',
     classifiers=[
         'Development Status :: 3 - Alpha',
