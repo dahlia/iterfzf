@@ -1,8 +1,35 @@
 ``iterfzf``: Pythonic interface to ``fzf``
 ==========================================
 
-Supports Python 2.6, 2.7, 3.3 or higher.
+.. image:: https://badge.fury.io/py/iterfzf.svg
+   :target: https://pypi.python.org/pypi/iterfzf
+   :alt: Latest PyPI version
 
+
+Demo session
+------------
+
+.. image:: https://asciinema.org/a/121028.png
+   :target: https://asciinema.org/a/121028
+   :alt: iterfzf demo session
+
+See also the `API reference`_.
+
+
+Key features
+------------
+
+- No dependency but only Python is required.  Prebuilt ``fzf`` binary for
+  each platform is bundled into wheels.  Everything is ready by
+  ``pip install iterfzf``.
+- Consumes an iterable rather than a list.  It makes UX way better when the
+  input data is long but *streamed* from low latency network.
+  It can begin to display items immediately after only *part* of items are
+  ready, and *before* the complete items are ready.
+- Supports Python 2.6, 2.7, 3.3 or higher.
+
+
+.. _api reference:
 
 ``iterfzf.iterfzf(iterable, **options)``
 ----------------------------------------
