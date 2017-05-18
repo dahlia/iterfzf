@@ -5,6 +5,14 @@
    :target: https://pypi.python.org/pypi/iterfzf
    :alt: Latest PyPI version
 
+.. image:: https://travis-ci.org/dahlia/iterfzf.svg
+   :alt: Build status (Travis CI)
+   :target: https://travis-ci.org/dahlia/iterfzf
+
+.. image:: https://ci.appveyor.com/api/projects/status/cf2eiuymdffvybl7?svg=true
+   :target: https://ci.appveyor.com/project/dahlia/iterfzf
+   :alt: Build status (AppVeyor)
+
 
 Demo session
 ------------
