@@ -82,6 +82,6 @@ after_deploy:
 - 'echo "password = $PYPI_PASSWORD" >> ~/.pypirc'
 - 'twine register dist/iterfzf-$TRAVIS_TAG.tar.gz || true'
 - |
-  for f in dist/iterfzf-*.*; do
+  for f in dist/iterfzf-*.whl; do
     twine upload "$f";
   done

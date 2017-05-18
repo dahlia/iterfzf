@@ -29,12 +29,16 @@ Key features
 
 - No dependency but only Python is required.  Prebuilt ``fzf`` binary for
   each platform is bundled into wheels.  Everything is ready by
-  ``pip install iterfzf``.
+  ``pip install iterfzf``.  (Note that not wheels of all supported platforms
+  are uploaded to PyPI as they don't allow minor platforms e.g. FreeBSD.
+  The complete wheels can be found from the `GitHub releases`__.)
 - Consumes an iterable rather than a list.  It makes UX way better when the
   input data is long but *streamed* from low latency network.
   It can begin to display items immediately after only *part* of items are
   ready, and *before* the complete items are ready.
 - Supports Python 2.6, 2.7, 3.3 or higher.
+
+__ https://github.com/dahlia/iterfzf/releases
 
 
 .. _api reference:
