@@ -3,10 +3,13 @@ import distutils.errors
 import json
 import os
 import os.path
+import platform
 import re
 import shutil
+import sys
 import tarfile
 import tempfile
+import time
 try:
     import urllib2
 except ImportError:
@@ -29,6 +32,7 @@ asset_filename_re = re.compile(
 fzf_bin_path = os.path.join(os.path.dirname(__file__), 'iterfzf', 'fzf')
 fzf_windows_bin_path = os.path.join(os.path.dirname(__file__),
                                     'iterfzf', 'fzf.exe')
+urllib_retry = 3
 
 
 def readme():
@@ -47,7 +51,16 @@ def get_fzf_release():
         with open(filepath) as f:
             d = f.read()
     except IOError:
-        r = urllib2.urlopen(release_url)
+        for attempt in range(1, urllib_retry + 1):
+            try:
+                r = urllib2.urlopen(release_url)
+            except urllib2.HTTPError as e:
+                if e.code == 403 and attempt < urllib_retry:
+                    # GitHub releases sometimes return 403 Forbidden
+                    time.sleep(attempt * 3)
+                    continue
+                raise
+            break
         d = r.read()
         r.close()
         mode = 'w' + ('b' if isinstance(d, bytes) else '')
@@ -107,12 +120,56 @@ def download_fzf_binary(plat, arch, overwrite=False):
     if overwrite or not os.path.isfile(bin_path):
         asset = get_fzf_binary_url(plat, arch)
         url, ext = asset
-        r = urllib2.urlopen(url)
+        for attempt in range(1, urllib_retry + 1):
+            try:
+                r = urllib2.urlopen(url)
+            except urllib2.HTTPError as e:
+                if e.code == 403 and attempt < urllib_retry:
+                    # GitHub releases sometimes return 403 Forbidden
+                    time.sleep(attempt * 3)
+                    continue
+                raise
+            break
         extract(r, ext, bin_path)
         r.close()
     mode = os.stat(bin_path).st_mode
     if not (mode & 0o111):
         os.chmod(bin_path, mode | 0o111)
+
+
+def get_current_plat_arch():
+    archs = {
+        'i686': '386', 'i386': '386',
+        'x86_64': 'amd64', 'amd64': 'amd64',
+    }
+    machine = platform.machine()
+    if not machine and sys.platform in ('win32', 'cygwin'):
+        bits, linkage = platform.architecture()
+        try:
+            machine = {'32bit': 'i386', '64bit': 'amd64'}[bits]
+        except KeyError:
+            raise ValueError('unsupported architecture: ' +
+                             repr((bits, linkage)))
+    if sys.platform.startswith('linux'):
+        archs.update(
+            armv5l='arm5', armv6l='arm6', armv7l='arm7', armv8l='arm8',
+        )
+    try:
+        arch = archs[machine]
+    except KeyError:
+        raise ValueError('unsupported machine: ' + repr(machine))
+    if sys.platform.startswith('linux'):
+        return 'linux', arch
+    elif sys.platform.startswith('freebsd'):
+        return 'freebsd', arch
+    elif sys.platform.startswith('openbsd'):
+        return 'freebsd', arch
+    elif sys.platform == 'darwin':
+        return 'darwin', arch
+    elif sys.platform in ('win32', 'cygwin'):
+        return 'windows', arch
+    else:
+        raise ValueError('unsupported platform: ' + repr(sys.platform))
 
 
 class bundle_fzf(distutils.core.Command):
@@ -126,8 +183,11 @@ class bundle_fzf(distutils.core.Command):
     boolean_options = ['no-overwrite']
 
     def initialize_options(self):
-        self.plat = None
-        self.arch = None
+        try:
+            self.plat, self.arch = get_current_plat_arch()
+        except ValueError:
+            self.plat = None
+            self.arch = None
         self.no_overwrite = None
         self.plat_name = None
 
