@@ -305,6 +305,7 @@ setup(
     cmdclass={'bundle_fzf': bundle_fzf},
     python_requires='>=2.6.0',
     install_requires=['setuptools'],
+    download_url='https://github.com/dahlia/iterfzf/releases',
     keywords='fzf',
     classifiers=[
         'Development Status :: 3 - Alpha',

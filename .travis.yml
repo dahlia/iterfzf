@@ -25,6 +25,8 @@ matrix:
   - os: linux
     language: python
     python: 3.6
+    env:
+    - DEPLOY=true
 install:
   |
   if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
@@ -35,4 +37,35 @@ install:
     pip install --upgrade pip setuptools
     pip install --user tox;
   fi
-script: tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
+script:
+- tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
+- '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
+before_deploy:
+- 'rm -rf build/ dist/ fzf-*.json iterfzf/fzf iterfzf/fzf.exe'
+- python setup.py sdist
+- 'echo >> setup.cfg'
+- 'echo "[bundle_fzf]" >> setup.cfg'
+- 'echo "github-access-token = $GITHUB_ACCESS_TOKEN" >> setup.cfg'
+- python setup.py bundle_fzf -p linux   -a 386   bdist_wheel
+- python setup.py bundle_fzf -p linux   -a amd64 bdist_wheel
+- python setup.py bundle_fzf -p freebsd -a 386   bdist_wheel
+- python setup.py bundle_fzf -p freebsd -a amd64 bdist_wheel
+- python setup.py bundle_fzf -p openbsd -a 386   bdist_wheel
+- python setup.py bundle_fzf -p openbsd -a amd64 bdist_wheel
+- python setup.py bundle_fzf -p darwin  -a 386   bdist_wheel
+- python setup.py bundle_fzf -p darwin  -a amd64 bdist_wheel
+- python setup.py bundle_fzf -p windows -a 386   bdist_wheel
+- python setup.py bundle_fzf -p windows -a amd64 bdist_wheel
+- python setup.py bundle_fzf -p linux   -a arm5  bdist_wheel
+- python setup.py bundle_fzf -p linux   -a arm6  bdist_wheel
+- python setup.py bundle_fzf -p linux   -a arm7  bdist_wheel
+- python setup.py bundle_fzf -p linux   -a arm8  bdist_wheel
+deploy:
+- provider: releases
+  api_key: "$GITHUB_ACCESS_TOKEN"
+  file_glob: true
+  file: dist/iterfzf-*.*
+  skip_cleanup: true
+  on:
+    condition: '"$DEPLOY" = "true"'
+    tags: true
