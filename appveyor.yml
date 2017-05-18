@@ -4,4 +4,4 @@ shallow_clone: true
 install:
 - C:\Python27-x64\Scripts\pip.exe install tox
 test_script:
-- C:\Python27-x64\Scripts\tox.exe --skip-missing-interpreters
+- C:\Python27-x64\Scripts\tox.exe --skip-missing-interpreters -- -O --github-access-token=%GITHUB_ACCESS_TOKEN%

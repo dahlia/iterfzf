@@ -35,4 +35,4 @@ install:
     pip install --upgrade pip setuptools
     pip install --user tox;
   fi
-script: tox
+script: tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"

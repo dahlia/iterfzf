@@ -9,7 +9,6 @@ import shutil
 import sys
 import tarfile
 import tempfile
-import time
 try:
     import urllib2
 except ImportError:
@@ -44,23 +43,27 @@ def readme():
         pass
 
 
-def get_fzf_release():
+def get_fzf_release(access_token=None):
     filename = 'fzf-{0}-release.json'.format(fzf_version)
     filepath = os.path.join(os.path.dirname(__file__), filename)
     try:
         with open(filepath) as f:
             d = f.read()
     except IOError:
-        for attempt in range(1, urllib_retry + 1):
-            try:
-                r = urllib2.urlopen(release_url)
-            except urllib2.HTTPError as e:
-                if e.code == 403 and attempt < urllib_retry:
-                    # GitHub releases sometimes return 403 Forbidden
-                    time.sleep(attempt * 3)
-                    continue
-                raise
-            break
+        url = release_url
+        if access_token:
+            url = '{0}?access_token={1}'.format(url, access_token)
+        try:
+            r = urllib2.urlopen(url)
+        except urllib2.HTTPError as e:
+            if e.code == 403 and e.info().get('X-RateLimit-Remaining') == 0:
+                raise RuntimeError(
+                    'GitHub rate limit reached. To increate the limit use '
+                    '-g/--github-access-token option.\n  ' + str(e)
+                )
+            elif e.code == 401 and access_token:
+                raise RuntimeError('Invalid GitHub access token.')
+            raise
         d = r.read()
         r.close()
         mode = 'w' + ('b' if isinstance(d, bytes) else '')
@@ -75,8 +78,8 @@ def get_fzf_release():
         return json.loads(d.decode('utf-8'))
 
 
-def get_fzf_binary_url(plat, arch):
-    release = get_fzf_release()
+def get_fzf_binary_url(plat, arch, access_token=None):
+    release = get_fzf_release(access_token=access_token)
     for asset in release['assets']:
         m = asset_filename_re.match(asset['name'])
         if not m:
@@ -115,21 +118,24 @@ def extract(stream, ext, extract_to):
             raise ValueError('unsupported file format: ' + repr(ext))
 
 
-def download_fzf_binary(plat, arch, overwrite=False):
+def download_fzf_binary(plat, arch, overwrite=False, access_token=None):
     bin_path = fzf_windows_bin_path if plat == 'windows' else fzf_bin_path
     if overwrite or not os.path.isfile(bin_path):
-        asset = get_fzf_binary_url(plat, arch)
+        asset = get_fzf_binary_url(plat, arch, access_token)
         url, ext = asset
-        for attempt in range(1, urllib_retry + 1):
-            try:
-                r = urllib2.urlopen(url)
-            except urllib2.HTTPError as e:
-                if e.code == 403 and attempt < urllib_retry:
-                    # GitHub releases sometimes return 403 Forbidden
-                    time.sleep(attempt * 3)
-                    continue
-                raise
-            break
+        if access_token:
+            url = '{0}?access_token={1}'.format(url, access_token)
+        try:
+            r = urllib2.urlopen(url)
+        except urllib2.HTTPError as e:
+            if e.code == 403 and e.info().get('X-RateLimit-Remaining') == 0:
+                raise RuntimeError(
+                    'GitHub rate limit reached. To increate the limit use '
+                    '-g/--github-access-token option.\n  ' + str(e)
+                )
+            elif e.code == 401 and access_token:
+                raise RuntimeError('Invalid GitHub access token.')
+            raise
         extract(r, ext, bin_path)
         r.close()
     mode = os.stat(bin_path).st_mode
@@ -179,6 +185,10 @@ class bundle_fzf(distutils.core.Command):
         ('plat=', 'p', 'platform e.g. windows, linux, freebsd, darwin'),
         ('arch=', 'a', 'architecture e.g. 386, amd64, arm8'),
         ('no-overwrite', 'O', 'do not overwrite if fzf binary exists'),
+        (
+            'github-access-token=', 'g',
+            'GitHub API access token to increate the rate limit',
+        ),
     ]
     boolean_options = ['no-overwrite']
 
@@ -189,6 +199,7 @@ class bundle_fzf(distutils.core.Command):
             self.plat = None
             self.arch = None
         self.no_overwrite = None
+        self.github_access_token = None
         self.plat_name = None
 
     def finalize_options(self):
@@ -272,7 +283,8 @@ class bundle_fzf(distutils.core.Command):
                 return get_tag_orig(self)
             bdist_wheel_cls.get_tag = get_tag
             download_fzf_binary(self.plat, self.arch,
-                                overwrite=not self.no_overwrite)
+                                overwrite=not self.no_overwrite,
+                                access_token=self.github_access_token)
             if dist.package_data is None:
                 dist.package_data = {}
             dist.package_data.setdefault('iterfzf', []).append(
