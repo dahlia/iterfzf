@@ -27,10 +27,13 @@ matrix:
     python: 3.6
     env:
     - DEPLOY=true
+    # PYPI_USER, PYPI_PASSWORD:
+    - secure: "RuuxHmBSalNkE8/hwYgARkv15cYVECyuj/+rPTBl/xjL7lBXxBPjqSDb224sSt8gQw+tjfCPZ0C4oum1SY82kFLKOY2KuYwZcb+F6MMsL8BaHKi8LubGkaX08DGQDxwQijsqPjxfSLHPkqaw7M76EnOpnrKmbwKQ1PMLvknABG6CfWTpoGcrBFrkgLOxAsHzMW/RywjvlP4S1vRi34Iv4+zzjVDYGMRVk3Wrs+whzTgf0EJDlYMBrvHXisSJbcKtlgSay+g0aqg9JSSFxcYrPQEYZSHJSs5+QTyhVKTSD6tDTYqFwRYEa1SKz+A6MVb6yxRik7vvScdH/AZCaon66EfNZUGLMG9P3jY956rP3nWcHG2G/NuObXc5Ol5ilRKgztWiyG5zXZf4GqVMHbwfO2Z6ek5FrPWEmCM+UD7JvbU4tG6u7lTx0bLgvzE1Gc67bEGCYoTSSPXTyKXO3V/bT5TR6hPI4BkuaTLDuF1LHIoxiW7TsxuPApra2vClLdEe+sJ6elz+8MN9dk6WFpCYTZdusIY+Tle8RuEzC6TaR2eQ+jl9z1GI+kvV1Z494Em3RzSz0/daB1rQCC/cJsXnhXjG6XkthR42nAVGaXBmdlcRBI/qvJt0VZP2aO73GTFLkBczS+rID+KJxn12t8R4UHd3iPVqw67c9vSEqrg7lpI="
+
 install:
   |
   if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
-    pip install --upgrade pip setuptools tox-travis docutils;
+    pip install --upgrade pip setuptools tox-travis docutils twine;
   elif [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
     brew tap drolando/homebrew-deadsnakes;
     brew install python33 python34 python35 python3 pypy
@@ -43,7 +46,7 @@ script:
 - '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
 - '[[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
 - '[[ "$(rst2html5.py README.rst 2>&1 > /dev/null | wc -l)" = "0" ]]'
-before_deploy:
+after_success:
 - 'rm -rf build/ dist/ fzf-*.json iterfzf/fzf iterfzf/fzf.exe'
 - python setup.py sdist
 - 'echo >> setup.cfg'
@@ -72,3 +75,13 @@ deploy:
   on:
     condition: '"$DEPLOY" = "true"'
     tags: true
+after_deploy:
+# We don't use Travis' PyPI provider since we shouldn't build dists twice
+- 'echo "[pypi]" > ~/.pypirc'
+- 'echo "username = $PYPI_USER" >> ~/.pypirc'
+- 'echo "password = $PYPI_PASSWORD" >> ~/.pypirc'
+- 'twine register dist/iterfzf-$TRAVIS_TAG.tar.gz || true'
+- |
+  for f in dist/iterfzf-*.*; do
+    twine upload "$f";
+  done
