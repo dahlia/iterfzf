@@ -30,16 +30,19 @@ matrix:
 install:
   |
   if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
-    pip install --upgrade pip setuptools tox-travis;
+    pip install --upgrade pip setuptools tox-travis docutils;
   elif [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
     brew tap drolando/homebrew-deadsnakes;
     brew install python33 python34 python35 python3 pypy
     pip install --upgrade pip setuptools
-    pip install --user tox;
+    pip install --user tox docutils;
   fi
 script:
 - tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
 - '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
+- '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
+- '[[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
+- '[[ "$(rst2html5.py README.rst 2>&1 > /dev/null | wc -l)" = "0" ]]'
 before_deploy:
 - 'rm -rf build/ dist/ fzf-*.json iterfzf/fzf iterfzf/fzf.exe'
 - python setup.py sdist

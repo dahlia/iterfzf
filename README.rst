@@ -134,3 +134,37 @@ MIT license.
 __ https://hongminhee.org/
 .. _GPLv3: https://www.gnu.org/licenses/gpl-3.0.html
 __ https://junegunn.kr/
+
+
+Changelog
+---------
+
+Versioning scheme
+~~~~~~~~~~~~~~~~~
+
+Note that ``iterfzf`` doesn't follow `Semantic Versioning`_.  The version
+consists of its own major and minor number followed by the version of bundled
+``fzf``.  For example, 1.2.3.4.5 means that ``iterfzf``'s own major version
+is 1, and its own minor version is 2, plus the version of ``fzf`` it bundles
+is 3.4.5.
+
+.. code-block:: text
+
+   /---------- 1. iterfzf's major version
+   |   /------ 3. bundled fzf's major version
+   |   |   /-- 5. bundled fzf's patch version
+   |   |   |
+   v   v   v
+   1.2.3.4.5
+     ^   ^
+     |   |
+     |   \---- 4. bundled fzf's minor version
+     \-------- 2. iterfzf's minor version
+
+.. _Semantic Versioning: http://semver.org/
+
+
+Version 0.1.0.16.7
+~~~~~~~~~~~~~~~~~~
+
+To be released.  Bundles ``fzf`` 0.16.7.
