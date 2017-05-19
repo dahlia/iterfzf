@@ -45,7 +45,7 @@ script:
 - '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
 - '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
 - '[[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
-- '[[ "$(rst2html5.py README.rst 2>&1 > /dev/null | wc -l)" = "0" ]]'
+- '[[ "$(rst2html5.py README.rst 2>&1 > /dev/null | wc -l | tr -d [:space:])" = "0" ]]'
 after_success:
 - 'rm -rf build/ dist/ fzf-*.json iterfzf/fzf iterfzf/fzf.exe'
 - python setup.py sdist
