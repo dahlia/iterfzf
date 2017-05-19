@@ -146,7 +146,7 @@ Changelog
 Versioning scheme
 ~~~~~~~~~~~~~~~~~
 
-Note that ``iterfzf`` doesn't follow `Semantic Versioning`_.  The version
+Note that ``iterfzf`` does *not* follow `Semantic Versioning`_.  The version
 consists of its own major and minor number followed by the version of bundled
 ``fzf``.  For example, 1.2.3.4.5 means that ``iterfzf``'s own major version
 is 1, and its own minor version is 2, plus the version of ``fzf`` it bundles
