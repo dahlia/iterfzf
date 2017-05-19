@@ -20,7 +20,7 @@ from setuptools import setup
 
 
 fzf_version = '0.16.7'
-version = '0.1.' + fzf_version
+version = '0.2.' + fzf_version
 release_url = ('https://api.github.com/repos/junegunn/fzf-bin/releases/tags/' +
                fzf_version)
 asset_filename_re = re.compile(
@@ -282,14 +282,14 @@ class bundle_fzf(distutils.core.Command):
                     return get_tag_orig(self)[:2] + (plat_name,)
                 return get_tag_orig(self)
             bdist_wheel_cls.get_tag = get_tag
-            download_fzf_binary(self.plat, self.arch,
-                                overwrite=not self.no_overwrite,
-                                access_token=self.github_access_token)
-            if dist.package_data is None:
-                dist.package_data = {}
-            dist.package_data.setdefault('iterfzf', []).append(
-                'fzf.exe' if self.plat == 'windows' else 'fzf'
-            )
+        download_fzf_binary(self.plat, self.arch,
+                            overwrite=not self.no_overwrite,
+                            access_token=self.github_access_token)
+        if dist.package_data is None:
+            dist.package_data = {}
+        dist.package_data.setdefault('iterfzf', []).append(
+            'fzf.exe' if self.plat == 'windows' else 'fzf'
+        )
 
 
 setup(

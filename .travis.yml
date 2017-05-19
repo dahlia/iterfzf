@@ -42,6 +42,7 @@ install:
   fi
 script:
 - tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
+- tox -e lint
 - '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
 - '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
 - '[[ "$TRAVIS_OS_NAME" = "osx" ]] || [[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
@@ -81,6 +82,6 @@ after_deploy:
 - 'echo "password = $PYPI_PASSWORD" >> ~/.pypirc'
 - 'twine register dist/iterfzf-$TRAVIS_TAG.tar.gz || true'
 - |
-  for f in dist/iterfzf-*.whl; do
+  for f in dist/iterfzf-*.*; do
     twine upload "$f";
   done

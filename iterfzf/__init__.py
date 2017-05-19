@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import errno
+import os.path
 import subprocess
 import sys
 
@@ -9,9 +10,17 @@ from pkg_resources import resource_exists, resource_filename
 __all__ = 'BUNDLED_EXECUTABLE', 'iterfzf'
 
 EXECUTABLE_NAME = 'fzf.exe' if sys.platform == 'win32' else 'fzf'
-BUNDLED_EXECUTABLE = (resource_filename(__name__, EXECUTABLE_NAME)
-                      if resource_exists(__name__, EXECUTABLE_NAME)
-                      else None)
+BUNDLED_EXECUTABLE = (
+    resource_filename(__name__, EXECUTABLE_NAME)
+    if resource_exists(__name__, EXECUTABLE_NAME)
+    else (
+        os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME)
+        if os.path.isfile(
+            os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME)
+        )
+        else None
+    )
+)
 
 
 def iterfzf(
