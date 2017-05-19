@@ -44,8 +44,7 @@ script:
 - tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
 - '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
 - '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
-- '[[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
-- '[[ "$(rst2html5.py README.rst 2>&1 > /dev/null | wc -l | tr -d [:space:])" = "0" ]]'
+- '[[ "$TRAVIS_OS_NAME" = "osx" ]] || [[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
 after_success:
 - 'rm -rf build/ dist/ fzf-*.json iterfzf/fzf iterfzf/fzf.exe'
 - python setup.py sdist
