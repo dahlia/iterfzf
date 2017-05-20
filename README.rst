@@ -171,7 +171,7 @@ is 3.4.5.
 Version 0.2.0.16.7
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` 0.16.7.
+Released on May 20, 2017.  Bundles ``fzf`` 0.16.7.
 
 - Made sdists (source distributions) possible to be correctly installed
   so that older ``pip``, can't deal with wheels, also can install ``iterfzf``.
