@@ -305,10 +305,12 @@ setup(
     cmdclass={'bundle_fzf': bundle_fzf},
     python_requires='>=2.6.0',
     install_requires=['setuptools'],
+    zip_safe=False,
+    include_package_data=True,
     download_url='https://github.com/dahlia/iterfzf/releases',
     keywords='fzf',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console :: Curses',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',  # noqa: E501
