@@ -171,7 +171,9 @@ is 3.4.5.
 Version 0.2.0.16.8
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` 0.16.8.
+Released on June 6, 2017.  Bundles ``fzf`` 0.16.8.
+
+- Upgraded ``fzf`` from 0.16.7 to 0.16.8.
 
 
 Version 0.2.0.16.7
