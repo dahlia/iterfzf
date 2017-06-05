@@ -168,10 +168,10 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 0.2.0.16.7
+Version 0.2.0.16.8
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` 0.16.7.
+To be released.  Bundles ``fzf`` 0.16.8.
 
 
 Version 0.2.0.16.7
