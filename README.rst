@@ -168,6 +168,12 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
+Version 0.2.0.17.0
+~~~~~~~~~~~~~~~~~~
+
+Released on August 27, 2017.  Bundles ``fzf`` 0.17.0.
+
+
 Version 0.2.0.16.11
 ~~~~~~~~~~~~~~~~~~~
 

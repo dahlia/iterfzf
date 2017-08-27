@@ -19,7 +19,7 @@ import zipfile
 from setuptools import setup
 
 
-fzf_version = '0.16.11'
+fzf_version = '0.17.0'
 version = '0.2.' + fzf_version
 release_url = ('https://api.github.com/repos/junegunn/fzf-bin/releases/tags/' +
                fzf_version)
