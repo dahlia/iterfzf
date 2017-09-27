@@ -28,7 +28,7 @@ def iterfzf(
     # Search mode:
     extended=True, exact=False, case_sensitive=None,
     # Interface:
-    multi=False, mouse=True,
+    multi=False, mouse=True, print_query=False,
     # Layout:
     prompt='> ',
     # Misc:
@@ -45,6 +45,8 @@ def iterfzf(
         cmd.append('--multi')
     if not mouse:
         cmd.append('--no-mouse')
+    if print_query:
+        cmd.append('--print-query')
     if query:
         cmd.append('--query=' + query)
     encoding = encoding or sys.getdefaultencoding()
@@ -93,6 +95,23 @@ def iterfzf(
             raise
     stdout = proc.stdout
     decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    if multi:
-        return [decode(l.strip(b'\r\n')) for l in iter(stdout.readline, b'')]
-    return decode(stdout.read().strip(b'\r\n'))
+    output = [decode(l.strip(b'\r\n')) for l in iter(stdout.readline, b'')]
+    if print_query:
+        try:
+            if multi:
+                return (output[0], output[1:])
+            else:
+                return (output[0], output[1])
+        except IndexError:
+            return (output[0], None)
+    else:
+        if multi:
+            return output
+        else:
+            try:
+                return output[0]
+            except IndexError:
+                return None
+    # if multi:
+    #     return [decode(l.strip(b'\r\n')) for l in iter(stdout.readline, b'')]
+    # return decode(stdout.read().strip(b'\r\n'))

@@ -78,6 +78,15 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``-m``/``--multi`` option.
 
+``print_query``
+   If ``True`` the return type is a tuple where the first element is the query
+   the user actually typed, and the second element is the selected output as
+   described above and depending on the state of ``multi``.
+
+   ``False`` by default,
+
+   Corresponds to ``--print-query`` option.
+
 ``encoding``
    The text encoding name (e.g. ``'utf-8'``, ``'ascii'``) to be used for
    encoding ``iterable`` values and decoding return values.  It's ignored
