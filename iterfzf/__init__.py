@@ -112,6 +112,3 @@ def iterfzf(
                 return output[0]
             except IndexError:
                 return None
-    # if multi:
-    #     return [decode(l.strip(b'\r\n')) for l in iter(stdout.readline, b'')]
-    # return decode(stdout.read().strip(b'\r\n'))
