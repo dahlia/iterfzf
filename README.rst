@@ -64,7 +64,7 @@ The following is the full list of parameters.  Please pass them as
    See also the ``encoding`` parameter.
 
 ``multi``
-   ``True`` to make a user possible to choose more than one.  A user can select
+   ``True`` to let the user to choose more than one.  A user can select
    items with tab/shift-tab.  If ``multi=True`` the function returns a list of
    strings rather than a string.
 
