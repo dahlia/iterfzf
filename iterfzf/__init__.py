@@ -86,7 +86,7 @@ def iterfzf(
             if e.errno != errno.EPIPE:
                 raise
             break
-    if proc is None or proc.wait() != 0:
+    if proc is None or proc.wait() not in [0, 1]:
         return None
     try:
         stdin.close()
