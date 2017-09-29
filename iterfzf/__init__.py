@@ -87,7 +87,10 @@ def iterfzf(
                 raise
             break
     if proc is None or proc.wait() not in [0, 1]:
-        return None
+        if print_query:
+            return None, None
+        else:
+            return None
     try:
         stdin.close()
     except IOError as e:
@@ -99,11 +102,11 @@ def iterfzf(
     if print_query:
         try:
             if multi:
-                return (output[0], output[1:])
+                return output[0], output[1:]
             else:
-                return (output[0], output[1])
+                return output[0], output[1]
         except IndexError:
-            return (output[0], None)
+            return output[0], None
     else:
         if multi:
             return output
