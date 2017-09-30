@@ -64,7 +64,7 @@ The following is the full list of parameters.  Please pass them as
    See also the ``encoding`` parameter.
 
 ``multi``
-   ``True`` to make a user possible to choose more than one.  A user can select
+   ``True`` to let the user to choose more than one.  A user can select
    items with tab/shift-tab.  If ``multi=True`` the function returns a list of
    strings rather than a string.
 
@@ -77,6 +77,17 @@ The following is the full list of parameters.  Please pass them as
    ``False`` by default.
 
    Corresponds to ``-m``/``--multi`` option.
+
+``print_query``
+   If ``True`` the return type is a tuple where the first element is the query
+   the user actually typed, and the second element is the selected output as
+   described above and depending on the state of ``multi``.
+
+   ``False`` by default.
+
+   Corresponds to ``--print-query`` option.
+
+   *New in version 0.3.0.*
 
 ``encoding``
    The text encoding name (e.g. ``'utf-8'``, ``'ascii'``) to be used for
@@ -172,6 +183,10 @@ Version 0.3.0.17.0
 ~~~~~~~~~~~~~~~~~~
 
 To be released.
+
+- Added ``print_query`` option.  [`#1`__ by George Kettleborough]
+
+__ https://github.com/dahlia/iterfzf/pull/1
 
 
 Version 0.2.0.17.0
