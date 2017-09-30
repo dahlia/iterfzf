@@ -33,12 +33,13 @@ matrix:
 install:
   |
   if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
-    pip install --upgrade pip setuptools tox-travis docutils twine;
+    pip install --upgrade pip setuptools
+    pip install --upgrade tox-travis docutils twine
   elif [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
-    brew tap drolando/homebrew-deadsnakes;
+    brew tap drolando/homebrew-deadsnakes
     brew install python33 python34 python35 python3 pypy
     pip install --upgrade pip setuptools
-    pip install --user tox docutils;
+    pip install --user tox docutils
   fi
 script:
 - tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
