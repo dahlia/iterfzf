@@ -83,9 +83,11 @@ The following is the full list of parameters.  Please pass them as
    the user actually typed, and the second element is the selected output as
    described above and depending on the state of ``multi``.
 
-   ``False`` by default,
+   ``False`` by default.
 
    Corresponds to ``--print-query`` option.
+
+   *New in version 0.3.0.*
 
 ``encoding``
    The text encoding name (e.g. ``'utf-8'``, ``'ascii'``) to be used for
@@ -181,6 +183,10 @@ Version 0.3.0.17.0
 ~~~~~~~~~~~~~~~~~~
 
 To be released.
+
+- Added ``print_query`` option.  [`#1`__ by George Kettleborough]
+
+__ https://github.com/dahlia/iterfzf/pull/1
 
 
 Version 0.2.0.17.0
