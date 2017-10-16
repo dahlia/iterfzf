@@ -36,6 +36,9 @@ install:
     pip install --upgrade pip setuptools
     pip install --upgrade tox-travis docutils twine
   elif [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
+    brew update || true
+    brew upgrade || true
+    brew update || true
     brew tap drolando/homebrew-deadsnakes
     brew install python33 python34 python35 python3 pypy
     pip install --upgrade pip setuptools
