@@ -179,10 +179,10 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 0.3.0.17.0
+Version 0.3.0.17.1
 ~~~~~~~~~~~~~~~~~~
 
-To be released.
+Released on October 16, 2017.  Bundles ``fzf`` 0.17.1.
 
 - Added ``print_query`` option.  [`#1`__ by George Kettleborough]
 
