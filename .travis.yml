@@ -41,6 +41,7 @@ install:
     brew update || true
     brew tap drolando/homebrew-deadsnakes
     brew install python33 python34 python35 python3 pypy
+    curl https://bootstrap.pypa.io/get-pip.py | python -
     pip install --upgrade pip setuptools
     pip install --user tox docutils
   fi
