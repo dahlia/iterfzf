@@ -182,7 +182,10 @@ is 3.4.5.
 Version 0.4.0.17.1
 ~~~~~~~~~~~~~~~~~~
 
-To be released.
+Released on October 19, 2017.  Bundles ``fzf`` 0.17.1.
+
+- Added missing binary wheels for macOS again.  (These were missing from
+  0.3.0.17.1, the previous release.)
 
 
 Version 0.3.0.17.1
