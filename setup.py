@@ -9,12 +9,13 @@ import shutil
 import sys
 import tarfile
 import tempfile
+import warnings
+import zipfile
+
 try:
     import urllib2
 except ImportError:
     from urllib import request as urllib2
-import warnings
-import zipfile
 
 from setuptools import setup
 
