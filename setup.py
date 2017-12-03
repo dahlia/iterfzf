@@ -20,7 +20,7 @@ except ImportError:
 from setuptools import setup
 
 
-fzf_version = '0.17.1'
+fzf_version = '0.17.3'
 version = '0.4.' + fzf_version
 release_url = ('https://api.github.com/repos/junegunn/fzf-bin/releases/tags/' +
                fzf_version)
