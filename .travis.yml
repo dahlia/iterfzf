@@ -45,8 +45,12 @@ install:
     pip3 install --user tox docutils
   fi
 script:
-- tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
-- tox -e lint
+- |
+  if [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
+    export PATH="$(python3 -m site --user-base)/bin:$PATH"
+  fi
+  tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
+  tox -e lint
 - '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
 - '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
 - '[[ "$TRAVIS_OS_NAME" = "osx" ]] || [[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
