@@ -4,5 +4,4 @@ shallow_clone: true
 install:
 - C:\Python27-x64\Scripts\pip.exe install tox
 test_script:
-- ps: '$env:TOX_ENVS=[string]::join(",", (C:\Python27-x64\Scripts\tox.exe -l | out-string -stream | select-string py26-sdist -notmatch))'
-- C:\Python27-x64\Scripts\tox.exe --skip-missing-interpreters -e %TOX_ENVS% -- -O --github-access-token=%GITHUB_ACCESS_TOKEN%
+- C:\Python27-x64\Scripts\tox.exe -r --skip-missing-interpreters -- -O --github-access-token=%GITHUB_ACCESS_TOKEN%

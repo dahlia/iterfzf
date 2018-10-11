@@ -36,7 +36,7 @@ Key features
   input data is long but *streamed* from low latency network.
   It can begin to display items immediately after only *part* of items are
   ready, and *before* the complete items are ready.
-- Supports Python 2.6, 2.7, 3.3 or higher.
+- Supports Python 2.7, 3.4 or higher.
 
 __ https://github.com/dahlia/iterfzf/releases
 
@@ -177,6 +177,15 @@ is 3.4.5.
      \-------- 2. iterfzf's minor version
 
 .. _Semantic Versioning: http://semver.org/
+
+
+Version 0.5.0.17.3
+~~~~~~~~~~~~~~~~~~
+
+To be released.  Bundles ``fzf`` 0.17.3.
+
+- Dropped Python 2.6 and 3.3 supports.
+- Officially support Python 3.7 (it anyway had worked though).
 
 
 Version 0.4.0.17.3

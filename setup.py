@@ -21,7 +21,7 @@ from setuptools import setup
 
 
 fzf_version = '0.17.3'
-version = '0.4.' + fzf_version
+version = '0.5.' + fzf_version
 release_url = ('https://api.github.com/repos/junegunn/fzf-bin/releases/tags/' +
                fzf_version)
 asset_filename_re = re.compile(
@@ -157,6 +157,7 @@ def get_current_plat_arch():
         except KeyError:
             raise ValueError('unsupported architecture: ' +
                              repr((bits, linkage)))
+    machine = machine.lower()
     if sys.platform.startswith('linux'):
         archs.update(
             armv5l='arm5', armv6l='arm6', armv7l='arm7', armv8l='arm8',
@@ -320,12 +321,11 @@ setup(
         'Operating System :: POSIX :: BSD :: FreeBSD',
         'Operating System :: POSIX :: BSD :: OpenBSD',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Terminals',
