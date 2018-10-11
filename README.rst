@@ -182,7 +182,7 @@ is 3.4.5.
 Version 0.5.0.17.3
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` 0.17.3.
+To be released.  Bundles ``fzf`` 0.17.5.
 
 - Dropped Python 2.6 and 3.3 supports.
 - Officially support Python 3.7 (it anyway had worked though).
