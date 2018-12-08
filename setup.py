@@ -304,6 +304,7 @@ setup(
     author_email='hong.minhee' '@' 'gmail.com',
     license='GPLv3 or later',
     packages=['iterfzf'],
+    package_data={'iterfzf': ['py.typed']},
     cmdclass={'bundle_fzf': bundle_fzf},
     python_requires='>=2.6.0',
     install_requires=['setuptools'],

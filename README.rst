@@ -186,6 +186,9 @@ To be released.  Bundles ``fzf`` 0.17.5.
 
 - Dropped Python 2.6 and 3.3 supports.
 - Officially support Python 3.7 (it anyway had worked though).
+- Marked the package as supporting type checking by following `PEP 561`_.
+
+.. _PEP 561: https://www.python.org/dev/peps/pep-0561/
 
 
 Version 0.4.0.17.3

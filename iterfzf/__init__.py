@@ -24,6 +24,7 @@ BUNDLED_EXECUTABLE = (
 
 
 def iterfzf(
+    # CHECK: When the signature changes, __init__.pyi file should also change.
     iterable,
     # Search mode:
     extended=True, exact=False, case_sensitive=None,
