@@ -8,6 +8,9 @@ matrix:
     python: pypy
   - os: linux
     language: python
+    python: pypy3
+  - os: linux
+    language: python
     python: 2.7
   - os: linux
     language: python
@@ -19,8 +22,6 @@ matrix:
     language: python
     python: 3.6
   - os: linux
-    dist: xenial  # Python 3.7 is currently only supported by xenial dist
-    sudo: true
     language: python
     python: 3.7
     env:
@@ -48,7 +49,7 @@ script:
     export PATH="$(python3 -m site --user-base)/bin:$PATH"
   fi
   tox -- -O --github-access-token="$GITHUB_ACCESS_TOKEN"
-  tox -e lint
+  [[ "$TRAVIS_PYTHON_VERSION" = pypy* ]] || tox -e lint
 - '[[ "$TRAVIS_TAG" = "" ]] || [[ "$TRAVIS_TAG" = "$(python setup.py --version)" ]]'
 - '[[ "$TRAVIS_TAG" = "" ]] || grep "Version $TRAVIS_TAG" README.rst'
 - '[[ "$TRAVIS_OS_NAME" = "osx" ]] || [[ "$TRAVIS_TAG" = "" ]] || ! grep -i "to be released" README.rst'
