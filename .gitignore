@@ -1,6 +1,7 @@
 *.egg-info/
 *.pyc
 .*.swp
+.mypy_cache/
 .tox/
 __pycache__/
 build/

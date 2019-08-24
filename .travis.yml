@@ -5,7 +5,7 @@ matrix:
     # See also: https://github.com/Homebrew/homebrew-core/issues/6949
   - os: linux
     language: python
-    python: pypy-5.3.1
+    python: pypy
   - os: linux
     language: python
     python: 2.7
