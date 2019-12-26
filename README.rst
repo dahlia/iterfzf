@@ -131,6 +131,11 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--prompt`` option.
 
+``preview``
+   The preview command to execute.  ``None`` by default.
+
+   Corresponds to ``--preview`` option.
+
 ``mouse``
    ``False`` to disable mouse.  ``True`` by default.
 
