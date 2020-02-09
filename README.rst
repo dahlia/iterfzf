@@ -184,10 +184,10 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 0.5.0.17.3
+Version 0.5.0.20.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` 0.17.5.
+To be released.  Bundles ``fzf`` 0.20.0.
 
 - Dropped Python 2.6, 3.3, and 3.4 supports.
 - Officially support Python 3.7 (it anyway had worked though).
