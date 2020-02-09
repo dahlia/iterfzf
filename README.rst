@@ -193,9 +193,12 @@ To be released.  Bundles ``fzf`` 0.17.5.
 - Officially support Python 3.7 (it anyway had worked though).
 - Marked the package as supporting type checking by following `PEP 561`_.
 - Added ``preview`` option.  [`#6`__ by Marc Weistroff]
+- Fixed a bug which had raised ``IOError`` by selecting an option before
+  finished to load all options on Windows.  [`#3`__ by Jeff Rimko]
 
 .. _PEP 561: https://www.python.org/dev/peps/pep-0561/
 __ https://github.com/dahlia/iterfzf/pull/6
+__ https://github.com/dahlia/iterfzf/pull/3
 
 
 Version 0.4.0.17.3

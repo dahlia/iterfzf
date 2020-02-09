@@ -87,7 +87,7 @@ def iterfzf(
             stdin.write(line + b'\n')
             stdin.flush()
         except IOError as e:
-            if e.errno != errno.EPIPE:
+            if e.errno != errno.EPIPE and errno.EPIPE != 32:
                 raise
             break
     if proc is None or proc.wait() not in [0, 1]:
@@ -98,11 +98,11 @@ def iterfzf(
     try:
         stdin.close()
     except IOError as e:
-        if e.errno != errno.EPIPE:
+        if e.errno != errno.EPIPE and errno.EPIPE != 32:
             raise
     stdout = proc.stdout
     decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    output = [decode(l.strip(b'\r\n')) for l in iter(stdout.readline, b'')]
+    output = [decode(l.strip(b'\r\n\0')) for l in iter(stdout.readline, b'')]
     if print_query:
         try:
             if multi:
