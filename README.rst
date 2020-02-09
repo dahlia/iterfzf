@@ -184,6 +184,12 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
+Version 0.6.0.20.0
+~~~~~~~~~~~~~~~~~~
+
+To be released.  Bundles ``fzf`` 0.20.0.
+
+
 Version 0.5.0.20.0
 ~~~~~~~~~~~~~~~~~~
 
