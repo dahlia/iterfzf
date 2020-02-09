@@ -20,6 +20,9 @@ matrix:
   - os: linux
     language: python
     python: 3.7
+  - os: linux
+    language: python
+    python: 3.8
     env:
     - DEPLOY=true
     # PYPI_USER, PYPI_PASSWORD:
@@ -33,8 +36,8 @@ install:
   elif [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
     brew update || true
     brew upgrade || true
-    pyenv install 2.7.17 3.7.6 3.6.10 3.5.9 3.4.9 pypy2.7-7.3.0 pypy3.6-7.3.0
-    pyenv global 2.7.17 3.7.6 3.6.10 3.5.9 3.4.9 pypy2.7-7.3.0 pypy3.6-7.3.0
+    pyenv install 2.7.17 3.8.1 3.7.6 3.6.10 3.5.9 3.4.9 pypy2.7-7.3.0 pypy3.6-7.3.0
+    pyenv global 2.7.17 3.8.1 3.7.6 3.6.10 3.5.9 3.4.9 pypy2.7-7.3.0 pypy3.6-7.3.0
     pip2 install -U pip setuptools virtualenv
     curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py \
       | python2 - --no-modify-path
