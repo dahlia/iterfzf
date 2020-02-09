@@ -51,11 +51,15 @@ def get_fzf_release(access_token=None):
         with open(filepath) as f:
             d = f.read()
     except IOError:
-        url = release_url
         if access_token:
-            url = '{0}?access_token={1}'.format(url, access_token)
+            request = urllib2.Request(
+                release_url,
+                headers={'Authorization': 'token ' + access_token},
+            )
+        else:
+            request = release_url
         try:
-            r = urllib2.urlopen(url)
+            r = urllib2.urlopen(request)
         except urllib2.HTTPError as e:
             if e.code == 403 and e.info().get('X-RateLimit-Remaining') == 0:
                 raise RuntimeError(
