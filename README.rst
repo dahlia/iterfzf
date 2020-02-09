@@ -36,7 +36,7 @@ Key features
   input data is long but *streamed* from low latency network.
   It can begin to display items immediately after only *part* of items are
   ready, and *before* the complete items are ready.
-- Supports Python 2.7, 3.4 or higher.
+- Supports Python 2.7, 3.5 or higher.
 
 __ https://github.com/dahlia/iterfzf/releases
 
@@ -189,7 +189,7 @@ Version 0.5.0.17.3
 
 To be released.  Bundles ``fzf`` 0.17.5.
 
-- Dropped Python 2.6 and 3.3 supports.
+- Dropped Python 2.6, 3.3, and 3.4 supports.
 - Officially support Python 3.7 (it anyway had worked though).
 - Marked the package as supporting type checking by following `PEP 561`_.
 - Added ``preview`` option.  [`#6`__ by Marc Weistroff]
