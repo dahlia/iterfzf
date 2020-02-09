@@ -131,6 +131,11 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--prompt`` option.
 
+``preview``
+   The preview command to execute.  ``None`` by default.
+
+   Corresponds to ``--preview`` option.
+
 ``mouse``
    ``False`` to disable mouse.  ``True`` by default.
 
@@ -187,8 +192,10 @@ To be released.  Bundles ``fzf`` 0.17.5.
 - Dropped Python 2.6 and 3.3 supports.
 - Officially support Python 3.7 (it anyway had worked though).
 - Marked the package as supporting type checking by following `PEP 561`_.
+- Added ``preview`` option.  [`#6`__ by Marc Weistroff]
 
 .. _PEP 561: https://www.python.org/dev/peps/pep-0561/
+__ https://github.com/dahlia/iterfzf/pull/6
 
 
 Version 0.4.0.17.3
