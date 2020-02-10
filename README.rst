@@ -78,6 +78,16 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``-m``/``--multi`` option.
 
+``cycle``
+   ``True`` to enable cyclic scrolling. When using the arrow keys (or tab), jumps to the
+   top/bottom when reaching the bottom/top.
+
+   ``False`` to disable cyclic scrolling. In this case, 
+
+   ``False`` by default.
+
+   Corresponds to ``--cycle`` option.
+
 ``print_query``
    If ``True`` the return type is a tuple where the first element is the query
    the user actually typed, and the second element is the selected output as

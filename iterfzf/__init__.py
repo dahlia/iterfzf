@@ -29,7 +29,7 @@ def iterfzf(
     # Search mode:
     extended=True, exact=False, case_sensitive=None,
     # Interface:
-    multi=False, mouse=True, print_query=False,
+    multi=False, mouse=True, print_query=False, cycle=False,
     # Layout:
     prompt='> ',
     preview=None,
@@ -43,6 +43,8 @@ def iterfzf(
         cmd.append('+i' if case_sensitive else '-i')
     if exact:
         cmd.append('--exact')
+    if cycle:
+        cmd.append('--cycle')
     if multi:
         cmd.append('--multi')
     if not mouse:
