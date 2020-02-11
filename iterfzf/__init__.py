@@ -92,9 +92,8 @@ def _exec_cmd(cmd, iterable, encoding, executable):
     )
     stdin = proc.stdin
     iterator = iter(iterable)
-    first = next(iterator, None)
-    is_byte = None
-    if first is not None:
+    try:
+        first = next(iterator)
         is_byte = isinstance(first, bytes)
         lf = b'\n' if is_byte else '\n'
         cr = b'\r' if is_byte else '\r'
@@ -117,6 +116,8 @@ def _exec_cmd(cmd, iterable, encoding, executable):
                 if e.errno != errno.EPIPE and errno.EPIPE != 32:
                     raise
                 break
+    except StopIteration:
+        is_byte = None  # this would be defined on first iteration else
     if proc is None or proc.wait() not in [0, 1]:
         return None, None
     try:
