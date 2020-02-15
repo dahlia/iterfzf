@@ -193,21 +193,15 @@ is 3.4.5.
 
 .. _Semantic Versioning: http://semver.org/
 
-Version 0.7.0.20.0
-~~~~~~~~~~~~~~~~~~
-
-
-To be released.
-
-- Added ``cycle`` option.  [`#10`__ by Abraham Hinteregger]
-
-__ https://github.com/dahlia/iterfzf/pull/10
 
 Version 0.6.0.20.0
 ~~~~~~~~~~~~~~~~~~
 
 To be released.  Bundles ``fzf`` 0.20.0.
 
+- Added ``cycle`` option.  [`#10`__ by Abraham Hinteregger]
+
+__ https://github.com/dahlia/iterfzf/pull/10
 
 Version 0.5.0.20.0
 ~~~~~~~~~~~~~~~~~~
