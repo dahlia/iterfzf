@@ -59,7 +59,7 @@ def iterfzf(
     cmd.append('--print-query')
     query_results = _exec_cmd(cmd, iterable, encoding, executable)
     query, results = query_results[0], query_results[1:]
-    if len(results) > 1 and results[0] is not None:
+    if len(results) > 0 and results[0] is not None:
         return_value = results if multi else results[0]
     else:
         return_value = None
@@ -87,37 +87,37 @@ def _exec_cmd(cmd, iterable, encoding, executable):
         str,List[str] -- The query (search entered in fzf) + list of results
     """
     encoding = encoding or sys.getdefaultencoding()
+    iterator = iter(iterable)
+    try:
+        first = next(iterator)
+    except StopIteration:
+        return None, None  # early exit on empty iterable - fix later
     proc = subprocess.Popen(
         cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=None
     )
     stdin = proc.stdin
-    iterator = iter(iterable)
-    try:
-        first = next(iterator)
-        is_byte = isinstance(first, bytes)
-        lf = b'\n' if is_byte else '\n'
-        cr = b'\r' if is_byte else '\r'
-        for line in chain([first], iterator):
-            if isinstance(line, bytes) != is_byte:
-                raise ValueError(
-                    'element values must be all byte strings or all '
-                    'unicode strings, not mixed of them: ' + repr(line)
-                )
-            if lf in line or cr in line:
-                raise ValueError(
-                    r'element values must not contain CR({1!r})/'
-                    r'LF({2!r}): {0!r}'.format(line, cr, lf)
-                )
-            line_b = line if is_byte else line.encode(encoding)
-            try:
-                stdin.write(line_b + b'\n')
-                stdin.flush()
-            except IOError as e:
-                if e.errno != errno.EPIPE and errno.EPIPE != 32:
-                    raise
-                break
-    except StopIteration:
-        is_byte = None  # this would be defined on first iteration else
+    is_byte = isinstance(first, bytes)
+    lf = b'\n' if is_byte else '\n'
+    cr = b'\r' if is_byte else '\r'
+    for line in chain([first], iterator):
+        if isinstance(line, bytes) != is_byte:
+            raise ValueError(
+                'element values must be all byte strings or all '
+                'unicode strings, not a mix of them: ' + repr(line)
+            )
+        if lf in line or cr in line:
+            raise ValueError(
+                r'element values must not contain CR({1!r})/'
+                r'LF({2!r}): {0!r}'.format(line, cr, lf)
+            )
+        line_b = line if is_byte else line.encode(encoding)
+        try:
+            stdin.write(line_b + b'\n')
+            stdin.flush()
+        except IOError as e:
+            if e.errno != errno.EPIPE and errno.EPIPE != 32:
+                raise
+            break
     if proc is None or proc.wait() not in [0, 1]:
         return None, None
     try:
