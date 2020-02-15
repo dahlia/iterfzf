@@ -1,4 +1,4 @@
-from typing import AnyStr, Iterable, Optional
+from typing import AnyStr, Iterable, Optional, Union
 
 BUNDLED_EXECUTABLE: Optional[str]
 
@@ -9,7 +9,7 @@ def iterfzf(
     exact: bool = ...,
     case_sensitive: Optional[bool] = ...,
     # Interface:
-    multi: bool = ...,
+    multi: Optional[Union[bool,int]] = ...,
     mouse: bool = ...,
     print_query: bool = ...,
     # Layout:

@@ -74,7 +74,11 @@ The following is the full list of parameters.  Please pass them as
    For both modes, the function returns ``None`` if nothing is matched or
    a user cancelled.
 
-   ``False`` by default.
+   It is also possible to provide an integer value ``>0`` instead of ``True``/``False``.
+   This limits the amount of possible selections. If an integer is provided,
+   the return value is a list if one or more elements were selected and ``None`` else.
+
+   ``None`` by default.
 
    Corresponds to ``-m``/``--multi`` option.
 
@@ -183,11 +187,16 @@ is 3.4.5.
 
 .. _Semantic Versioning: http://semver.org/
 
-
 Version 0.6.0.20.0
 ~~~~~~~~~~~~~~~~~~
 
 To be released.  Bundles ``fzf`` 0.20.0.
+
+- Changed ``multi`` option to allow numeric values as well.
+  e.g. ``iterfzf(list, multi=15)`` allows the selection of at most 15 items.
+  [`#11`__ by Abraham Hinteregger]
+
+__ https://github.com/dahlia/iterfzf/pull/11
 
 
 Version 0.5.0.20.0

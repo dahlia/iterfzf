@@ -29,7 +29,7 @@ def iterfzf(
     # Search mode:
     extended=True, exact=False, case_sensitive=None,
     # Interface:
-    multi=False, mouse=True, print_query=False,
+    multi=None, mouse=True, print_query=False,
     # Layout:
     prompt='> ',
     preview=None,
@@ -43,8 +43,14 @@ def iterfzf(
         cmd.append('+i' if case_sensitive else '-i')
     if exact:
         cmd.append('--exact')
-    if multi:
-        cmd.append('--multi')
+    if multi is not None:
+        if isinstance(multi, bool):
+            if multi:
+                cmd.append('--multi')
+        elif isinstance(multi, int) and multi > 0:
+            cmd.append('--multi=' + str(multi))
+        else:
+            raise ValueError('multi must be either bool or an int>0')
     if not mouse:
         cmd.append('--no-mouse')
     if print_query:
