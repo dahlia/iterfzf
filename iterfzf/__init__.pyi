@@ -12,6 +12,7 @@ def iterfzf(
     multi: bool = ...,
     mouse: bool = ...,
     print_query: bool = ...,
+    cycle: bool = ...,
     # Layout:
     prompt: str = ...,
     preview: Optional[str] = ...,

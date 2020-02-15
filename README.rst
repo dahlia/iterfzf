@@ -78,6 +78,16 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``-m``/``--multi`` option.
 
+``cycle``
+   ``True`` to enable cyclic scrolling. When using the arrow keys (or tab), jumps to the
+   top/bottom when reaching the bottom/top.
+
+   ``False`` to disable cyclic scrolling. In this case, 
+
+   ``False`` by default.
+
+   Corresponds to ``--cycle`` option.
+
 ``print_query``
    If ``True`` the return type is a tuple where the first element is the query
    the user actually typed, and the second element is the selected output as
@@ -189,6 +199,9 @@ Version 0.6.0.20.0
 
 To be released.  Bundles ``fzf`` 0.20.0.
 
+- Added ``cycle`` option.  [`#10`__ by Abraham Hinteregger]
+
+__ https://github.com/dahlia/iterfzf/pull/10
 
 Version 0.5.0.20.0
 ~~~~~~~~~~~~~~~~~~
