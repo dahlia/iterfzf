@@ -1,4 +1,4 @@
-from typing import AnyStr, Iterable, Optional
+from typing import Dict, AnyStr, Iterable, Optional
 
 BUNDLED_EXECUTABLE: Optional[str]
 
@@ -13,6 +13,7 @@ def iterfzf(
     mouse: bool = ...,
     print_query: bool = ...,
     header: Optional[str] = ...,
+    color: Optional[Dict[str,str]] = ...,
     # Layout:
     prompt: str = ...,
     preview: Optional[str] = ...,
