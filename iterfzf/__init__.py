@@ -102,7 +102,7 @@ def iterfzf(
             raise
     stdout = proc.stdout
     decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    output = [decode(l.strip(b'\r\n\0')) for l in iter(stdout.readline, b'')]
+    output = [decode(ln.strip(b'\r\n\0')) for ln in iter(stdout.readline, b'')]
     if print_query:
         try:
             if multi:
