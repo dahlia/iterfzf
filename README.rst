@@ -146,6 +146,11 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--ansi`` option.
 
+``extra_args``
+   An optional list of extra arguments to pass to fzf on the command line,
+   which will be appended to the command.
+   This allows passing in arguments which aren't yet supported by iterfzf.
+
 
 Author and license
 ------------------
@@ -195,6 +200,7 @@ Version 0.6.0.20.0
 To be released.  Bundles ``fzf`` 0.20.0.
 
 - Added support for the --ansi option
+- Added the ability to pass extra arguments to the underlying fzf process
 
 
 Version 0.5.0.20.0

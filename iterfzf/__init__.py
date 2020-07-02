@@ -34,7 +34,8 @@ def iterfzf(
     prompt='> ',
     preview=None,
     # Misc:
-    query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
+    query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME,
+    extra_args=None
 ):
     cmd = [executable, '--no-sort', '--prompt=' + prompt]
     if not extended:
@@ -55,6 +56,8 @@ def iterfzf(
         cmd.append('--query=' + query)
     if preview:
         cmd.append('--preview=' + preview)
+    if extra_args:
+        cmd.extend(extra_args)
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
