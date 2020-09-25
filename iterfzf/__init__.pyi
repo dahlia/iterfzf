@@ -15,6 +15,7 @@ def iterfzf(
     # Layout:
     prompt: str = ...,
     preview: Optional[str] = ...,
+    ansi: bool = ...,
     # Misc:
     query: str = ...,
     encoding: Optional[str] = ...,
