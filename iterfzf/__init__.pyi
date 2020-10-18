@@ -14,6 +14,7 @@ def iterfzf(
     print_query: bool = ...,
     # Layout:
     prompt: str = ...,
+    ansi: bool = ...,
     preview: Optional[str] = ...,
     # Misc:
     query: str = ...,
