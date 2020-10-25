@@ -141,6 +141,12 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--no-mouse`` option.
 
+``ansi``
+   ``True`` to enable ansi colors mode. ``None`` by default.
+
+   Corresponds to ``--ansi`` option.
+
+
 
 Author and license
 ------------------
