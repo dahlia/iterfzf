@@ -33,6 +33,7 @@ def iterfzf(
     # Layout:
     prompt='> ',
     ansi=None,
+    header_lines=None,
     preview=None,
     # Misc:
     query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
@@ -56,6 +57,8 @@ def iterfzf(
         cmd.append('--preview=' + preview)
     if ansi:
         cmd.append('--ansi')
+    if header_lines:
+        cmd.append('--lines=' + str(header_lines))
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None

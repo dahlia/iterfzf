@@ -146,6 +146,10 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--ansi`` option.
 
+``header_lines``
+   A number that dictates which line is supposed to be the header of the iterable. ``None`` by default.
+
+   Corresponds to ``--header-lines`` option.
 
 
 Author and license
@@ -196,6 +200,7 @@ Version 0.6.0.20.0
 To be released.  Bundles ``fzf`` 0.20.0.
 
 Added ``ansi`` option. [`#16` by Erik Lilja]
+Added ``header_lines`` option. [`#17` by Erik Lilja]
 
 
 Version 0.5.0.20.0
