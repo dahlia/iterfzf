@@ -29,7 +29,7 @@ def iterfzf(
     # Search mode:
     extended=True, exact=False, case_sensitive=None,
     # Interface:
-    multi=False, mouse=True, print_query=False,
+    multi=False, mouse=True, print_query=False, header=None, color=None,
     # Layout:
     prompt='> ',
     ansi=None,
@@ -50,6 +50,10 @@ def iterfzf(
         cmd.append('--no-mouse')
     if print_query:
         cmd.append('--print-query')
+    if header:
+        cmd.append('--header=' + header)
+    if color:
+        cmd.append('--color=' + ','.join([str(k) + ':' + str(v) for k,v in color.items()]))
     if query:
         cmd.append('--query=' + query)
     if preview:
