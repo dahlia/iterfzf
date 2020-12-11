@@ -52,7 +52,7 @@ def iterfzf(
         cmd.append('--print-query')
     if query:
         cmd.append('--query=' + query)
-    if height < '100%':
+    if height != '100%':
         cmd.append('--height=' + height)
     if preview:
         cmd.append('--preview=' + preview)
