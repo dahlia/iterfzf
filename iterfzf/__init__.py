@@ -56,7 +56,6 @@ def iterfzf(
         cmd.append('--height=' + height)
     if preview:
         cmd.append('--preview=' + preview)
-    print(cmd); exit()
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
