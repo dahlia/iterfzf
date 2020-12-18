@@ -13,6 +13,7 @@ def iterfzf(
     mouse: bool = ...,
     print_query: bool = ...,
     # Layout:
+    height: str = ...,
     prompt: str = ...,
     ansi: bool = ...,
     preview: Optional[str] = ...,

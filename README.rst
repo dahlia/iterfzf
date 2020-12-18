@@ -126,6 +126,12 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``-q``/``--query`` option.
 
+``height``
+   Set the height of the prompt.
+   ``'100%'`` by default.
+
+   Corresponds to ``--height`` option.
+
 ``prompt``
    The prompt sequence.  ``' >'`` by default.
 

@@ -31,8 +31,8 @@ def iterfzf(
     # Interface:
     multi=False, mouse=True, print_query=False,
     # Layout:
+    height='100%',
     prompt='> ',
-    ansi=None,
     preview=None,
     # Misc:
     query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
@@ -52,10 +52,10 @@ def iterfzf(
         cmd.append('--print-query')
     if query:
         cmd.append('--query=' + query)
+    if height != '100%':
+        cmd.append('--height=' + height)
     if preview:
         cmd.append('--preview=' + preview)
-    if ansi:
-        cmd.append('--ansi')
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
@@ -105,7 +105,7 @@ def iterfzf(
             raise
     stdout = proc.stdout
     decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    output = [decode(ln.strip(b'\r\n\0')) for ln in iter(stdout.readline, b'')]
+    output = [decode(l.strip(b'\r\n\0')) for l in iter(stdout.readline, b'')]
     if print_query:
         try:
             if multi:
