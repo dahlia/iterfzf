@@ -23,7 +23,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 fzf_version = "0.20.0"
-version = "0.6." + fzf_version
+version = "0.6.1." + fzf_version
 release_url = (
     "https://api.github.com/repos/junegunn/fzf-bin/releases/tags/" + fzf_version
 )
@@ -318,9 +318,9 @@ setup(
     version=version,
     description="Pythonic interface to fzf",
     long_description=long_description,
-    url="https://github.com/sudo-julia/iterfzf",
-    author="Hong Minhee",
-    author_email="hong.minhee" "@" "gmail.com",
+    url="https://github.com/sudo-julia/mkbak-iterfzf",
+    author="sudo-julia",
+    author_email="jlearning" "@" "tuta.io",
     license="GPLv3 or later",
     packages=["iterfzf"],
     package_data={"iterfzf": ["py.typed"]},
@@ -329,7 +329,7 @@ setup(
     install_requires=["setuptools"],
     zip_safe=False,
     include_package_data=True,
-    download_url="https://github.com/dahlia/iterfzf/releases",
+    download_url="https://github.com/sudo-julia/mkbak-iterfzf/releases",
     keywords="fzf",
     classifiers=[
         "Development Status :: 4 - Beta",

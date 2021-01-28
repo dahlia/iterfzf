@@ -152,22 +152,24 @@ MIT license.
 
 ### Versioning scheme
 
-Note that `iterfzf` does *not* follow [Semantic
+Note that `mkbak-iterfzf` does *not* follow [Semantic
 Versioning](http://semver.org/). The version consists of its own major
 and minor number followed by the version of bundled `fzf`. For example,
-1.2.3.4.5 means that `iterfzf`'s own major version is 1, and its own
-minor version is 2, plus the version of `fzf` it bundles is 3.4.5.
+1.2.3.4.5.6 means that `iterfzf`'s own major version is 1, and its own
+minor version is 2, its on patch 3, plus the version of `fzf` it bundles is 4.5.6.
 
 ``` text
 /---------- 1. iterfzf's major version
-|   /------ 3. bundled fzf's major version
-|   |   /-- 5. bundled fzf's patch version
-|   |   |
-v   v   v
-1.2.3.4.5
-  ^   ^
-  |   |
-  |   \---- 4. bundled fzf's minor version
+|     /------ 4. bundled fzf's major version
+|     |   /-- 6. bundled fzf's patch version
+|     |   |
+v     v   v
+1.2.3.4.5.6
+  ^ ^   ^
+  | |   |
+  | |   \---- 5. bundled fzf's minor version
+  | |
+  | \-------3. mkbak-iterfzf's patch version
   \-------- 2. iterfzf's minor version
 ```
 
