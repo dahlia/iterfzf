@@ -308,7 +308,7 @@ class bundle_fzf(distutils.core.Command):
         )
         if dist.package_data is None:
             dist.package_data = {}
-        dist.package_data.setdefault("iterfzf", []).append(
+        dist.package_data.setdefault("mkbak-iterfzf", []).append(
             "fzf.exe" if self.plat == "windows" else "fzf"
         )
 
@@ -322,8 +322,8 @@ setup(
     author="sudo-julia",
     author_email="jlearning" "@" "tuta.io",
     license="GPLv3 or later",
-    packages=["iterfzf"],
-    package_data={"iterfzf": ["py.typed"]},
+    packages=["mkbak_iterfzf"],
+    package_data={"mkbak_iterfzf": ["py.typed"]},
     cmdclass={"bundle_fzf": bundle_fzf},
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4",
     install_requires=["setuptools"],
