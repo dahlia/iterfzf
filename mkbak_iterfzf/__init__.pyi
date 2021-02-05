@@ -19,8 +19,10 @@ def iterfzf(
     prompt: str = ...,
     ansi: bool = ...,
     preview: Optional[str] = ...,
+    # Display:
+    ansi: bool = ...,
     # Misc:
-    query: str = ...,
+    query: Optional[str] = ...,
     encoding: Optional[str] = ...,
     executable: str = ...,
 ) -> Iterable[AnyStr]: ...

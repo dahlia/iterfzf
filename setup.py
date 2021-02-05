@@ -22,7 +22,7 @@ from setuptools import setup
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-fzf_version = "0.20.0"
+fzf_version = "0.25.1"
 version = "0.7" + fzf_version
 release_url = (
     "https://api.github.com/repos/junegunn/fzf-bin/releases/tags/" + fzf_version

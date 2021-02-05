@@ -33,13 +33,15 @@ def iterfzf(
     multi=False,
     mouse=True,
     print_query=False,
-    bind="",
+    bind=None,
     # Layout:
     height="100%",
     prompt="> ",
     preview=None,
+    # Display:
+    ansi=False,
     # Misc:
-    query="",
+    query=None,
     encoding=None,
     executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME,
 ):
@@ -60,6 +62,8 @@ def iterfzf(
         cmd.append("--print-query")
     if bind:
         cmd.append("--bind=" + bind)
+    if ansi:
+        cmd.append("--ansi")
     if query:
         cmd.append("--query=" + query)
     if height != "100%":

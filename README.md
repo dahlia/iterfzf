@@ -113,11 +113,6 @@ Empty string by default.
 
 Corresponds to `-q`/`--query` option.
 
-`height`  
-Set the height of the prompt. `'100%'` by default.
-
-Corresponds to `--height` option.
-
 `prompt`  
 The prompt sequence. `' >'` by default.
 
@@ -133,10 +128,27 @@ Corresponds to `--preview` option.
 
 Corresponds to `--no-mouse` option.
 
+*New in version 0.6.0*
 `ansi`  
 `True` to enable ansi colors mode. `None` by default.
 
 Corresponds to `--ansi` option.
+
+`height`  
+Set the height of the prompt. `'100%'` by default.
+
+Corresponds to `--height` option.
+
+*New in version 0.7.0*
+`bind`  
+Custom key bindings. Refer to fzf's [man page](https://manpages.ubuntu.com/manpages/disco/man1/fzf.1.html#key%20bindings)
+
+Corresponds to the `--bind` option
+
+`no_sort`  
+`True` for unsorted results, and `False` to sort the results. (Increases match accuracy.)
+
+Corresponds to the `--no-sort` option.
 
 ## Author and license
 
@@ -173,7 +185,7 @@ v   v   v
   \-------- 2. iterfzf's minor version
 ```
 
-### Version 0.7.0.20.0
+### Version 0.7.0.25.1
 
 Released on Month, X, XXXX. Bundles `fzf` 0.20.0.
 
