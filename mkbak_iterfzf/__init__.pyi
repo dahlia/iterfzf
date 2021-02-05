@@ -8,10 +8,12 @@ def iterfzf(
     extended: bool = ...,
     exact: bool = ...,
     case_sensitive: Optional[bool] = ...,
+    no_sort: bool = ...,
     # Interface:
     multi: bool = ...,
     mouse: bool = ...,
     print_query: bool = ...,
+    bind: Optional[str] = ...,
     # Layout:
     height: str = ...,
     prompt: str = ...,

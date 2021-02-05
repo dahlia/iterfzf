@@ -7,17 +7,15 @@ import sys
 
 from pkg_resources import resource_exists, resource_filename
 
-__all__ = 'BUNDLED_EXECUTABLE', 'iterfzf'
+__all__ = "BUNDLED_EXECUTABLE", "iterfzf"
 
-EXECUTABLE_NAME = 'fzf.exe' if sys.platform == 'win32' else 'fzf'
+EXECUTABLE_NAME = "fzf.exe" if sys.platform == "win32" else "fzf"
 BUNDLED_EXECUTABLE = (
     resource_filename(__name__, EXECUTABLE_NAME)
     if resource_exists(__name__, EXECUTABLE_NAME)
     else (
         os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME)
-        if os.path.isfile(
-            os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME)
-        )
+        if os.path.isfile(os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME))
         else None
     )
 )
@@ -27,67 +25,78 @@ def iterfzf(
     # CHECK: When the signature changes, __init__.pyi file should also change.
     iterable,
     # Search mode:
-    extended=True, exact=False, case_sensitive=None,
+    extended=True,
+    exact=False,
+    case_sensitive=None,
+    no_sort=False,
     # Interface:
-    multi=False, mouse=True, print_query=False,
+    multi=False,
+    mouse=True,
+    print_query=False,
+    bind="",
     # Layout:
-    height='100%',
-    prompt='> ',
+    height="100%",
+    prompt="> ",
     preview=None,
     # Misc:
-    query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
+    query="",
+    encoding=None,
+    executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME,
 ):
-    cmd = [executable, '--no-sort', '--prompt=' + prompt]
+    cmd = [executable, "--prompt=" + prompt]
     if not extended:
-        cmd.append('--no-extended')
+        cmd.append("--no-extended")
     if case_sensitive is not None:
-        cmd.append('+i' if case_sensitive else '-i')
+        cmd.append("+i" if case_sensitive else "-i")
     if exact:
-        cmd.append('--exact')
+        cmd.append("--exact")
+    if no_sort:
+        cmd.append("--no-sort")
     if multi:
-        cmd.append('--multi')
+        cmd.append("--multi")
     if not mouse:
-        cmd.append('--no-mouse')
+        cmd.append("--no-mouse")
     if print_query:
-        cmd.append('--print-query')
+        cmd.append("--print-query")
+    if bind:
+        cmd.append("--bind=" + bind)
     if query:
-        cmd.append('--query=' + query)
-    if height != '100%':
-        cmd.append('--height=' + height)
+        cmd.append("--query=" + query)
+    if height != "100%":
+        cmd.append("--height=" + height)
     if preview:
-        cmd.append('--preview=' + preview)
+        cmd.append("--preview=" + preview)
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
     byte = None
-    lf = u'\n'
-    cr = u'\r'
+    lf = u"\n"
+    cr = u"\r"
     for line in iterable:
         if byte is None:
             byte = isinstance(line, bytes)
             if byte:
-                lf = b'\n'
-                cr = b'\r'
+                lf = b"\n"
+                cr = b"\r"
         elif isinstance(line, bytes) is not byte:
             raise ValueError(
-                'element values must be all byte strings or all '
-                'unicode strings, not mixed of them: ' + repr(line)
+                "element values must be all byte strings or all "
+                "unicode strings, not mixed of them: " + repr(line)
             )
         if lf in line or cr in line:
-            raise ValueError(r"element values must not contain CR({1!r})/"
-                             r"LF({2!r}): {0!r}".format(line, cr, lf))
+            raise ValueError(
+                r"element values must not contain CR({1!r})/"
+                r"LF({2!r}): {0!r}".format(line, cr, lf)
+            )
         if proc is None:
             proc = subprocess.Popen(
-                cmd,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=None
+                cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=None
             )
             stdin = proc.stdin
         if not byte:
             line = line.encode(encoding)
         try:
-            stdin.write(line + b'\n')
+            stdin.write(line + b"\n")
             stdin.flush()
         except IOError as e:
             if e.errno != errno.EPIPE and errno.EPIPE != 32:
@@ -105,7 +114,7 @@ def iterfzf(
             raise
     stdout = proc.stdout
     decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    output = [decode(l.strip(b'\r\n\0')) for l in iter(stdout.readline, b'')]
+    output = [decode(l.strip(b"\r\n\0")) for l in iter(stdout.readline, b"")]
     if print_query:
         try:
             if multi:

@@ -160,24 +160,32 @@ minor version is 2, its on patch 3, plus the version of `fzf` it bundles is 4.5.
 
 ``` text
 /---------- 1. iterfzf's major version
-|     /------ 4. bundled fzf's major version
-|     |   /-- 6. bundled fzf's patch version
-|     |   |
-v     v   v
-1.2.3.4.5.6
-  ^ ^   ^
-  | |   |
-  | |   \---- 5. bundled fzf's minor version
-  | |
-  | \-------3. mkbak-iterfzf's patch version
+|   /------ 3. bundled fzf's major version
+|   |   /-- 5. bundled fzf's patch version
+|   |   |
+v   v   v
+1.2.4.5.6
+  ^   ^
+  |   |
+  |   \---- 4. bundled fzf's minor version
+  |
+  |
   \-------- 2. iterfzf's minor version
 ```
 
+### Version 0.7.0.20.0
+
+Released on Month, X, XXXX. Bundles `fzf` 0.20.0.
+
+- Added `bind` option from issue \[[#21](https://github.com/dahlia/iterfzf/issue/21)\].
+- Added `no-sort` as an argument (it is no longer default behavior) \[[#23](https://github.com/dahlia/iterfzf/issue/23)]
+
 ### Version 0.6.0.20.0
 
-To be released. Bundles `fzf` 0.20.0.
+Released on Month, X, XXXX. Bundles `fzf` 0.20.0.
 
-Added `ansi` option. \[[#16](https://github.com/dahlia/iterfzf/pull/16) by Erik Lilja\]
+- Added `height` option. \[[#22](https://github.com/dahlia/iterfzf/pull/22) by sudo-julia\]
+- Added `ansi` option. \[[#16](https://github.com/dahlia/iterfzf/pull/16) by Erik Lilja\]
 
 ### Version 0.5.0.20.0
 

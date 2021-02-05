@@ -23,7 +23,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 fzf_version = "0.20.0"
-version = "0.6.1." + fzf_version
+version = "0.7" + fzf_version
 release_url = (
     "https://api.github.com/repos/junegunn/fzf-bin/releases/tags/" + fzf_version
 )
