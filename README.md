@@ -187,14 +187,18 @@ v   v   v
 
 ### Version 0.7.0.25.1
 
-Released on Month, X, XXXX. Bundles `fzf` 0.20.0.
+Released on February, XX, 2021. Bundles `fzf` 0.25.1.
 
-- Added `bind` option from issue \[[#21](https://github.com/dahlia/iterfzf/issue/21)\].
-- Added `no-sort` as an argument (it is no longer default behavior) \[[#23](https://github.com/dahlia/iterfzf/issue/23)]
+- Upgraded `fzf` from 0.20.0 to [0.25.1](https://github.com/junegunn/fzf/blob/master/CHANGELOG.md)
+- Added `padding` option.
+- Added `bind` option from issue
+\[[#21](https://github.com/dahlia/iterfzf/issue/21) by ayghoshter\].
+- Added `no_sort` as an argument (the results are now sorted by default)
+\[[#23](https://github.com/dahlia/iterfzf/pull/23) by gikeymarcia\]
 
 ### Version 0.6.0.20.0
 
-Released on Month, X, XXXX. Bundles `fzf` 0.20.0.
+Released on January, 28, 2021. Bundles `fzf` 0.20.0.
 
 - Added `height` option. \[[#22](https://github.com/dahlia/iterfzf/pull/22) by sudo-julia\]
 - Added `ansi` option. \[[#16](https://github.com/dahlia/iterfzf/pull/16) by Erik Lilja\]

@@ -7,28 +7,28 @@ some items, then get chosen item keys, you need to give ``iterfzf()`` string
 representations of key-value pairs.  Here's an example:
 
 """
-from iterfzf import iterfzf
+from mkbak_iterfzf import iterfzf
 
 
 def fzf_dict(d, multi):
     r"""This assumes keys must have no tabs, hence ``'\t'`` as a separator."""
-    options = ('{0}\t{1}'.format(k, v) for k, v in d.items())
+    options = ("{0}\t{1}".format(k, v) for k, v in d.items())
     for kv in iterfzf(options, multi=multi):
-        yield kv[:kv.index('\t')]
+        yield kv[: kv.index("\t")]
 
 
 def main():
     d = {
-        '1': 'foo',
-        '2': 'bar',
-        '3': 'spam',
-        '4': 'egg',
+        "1": "foo",
+        "2": "bar",
+        "3": "spam",
+        "4": "egg",
     }
     print(iterfzf(d.values()))
     keys = fzf_dict(d, multi=True)
     for key in keys:
-        print(repr(key), '=>', repr(d[key]))
+        print(repr(key), "=>", repr(d[key]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

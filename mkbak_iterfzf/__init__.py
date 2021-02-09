@@ -35,7 +35,8 @@ def iterfzf(
     print_query=False,
     bind=None,
     # Layout:
-    height="100%",
+    height=None,
+    padding=None,
     prompt="> ",
     preview=None,
     # Display:
@@ -66,8 +67,10 @@ def iterfzf(
         cmd.append("--ansi")
     if query:
         cmd.append("--query=" + query)
-    if height != "100%":
+    if height:
         cmd.append("--height=" + height)
+    if padding:
+        cmd.append("--padding=" + padding)
     if preview:
         cmd.append("--preview=" + preview)
     encoding = encoding or sys.getdefaultencoding()

@@ -16,8 +16,8 @@ def iterfzf(
     bind: Optional[str] = ...,
     # Layout:
     height: str = ...,
-    prompt: str = ...,
-    ansi: bool = ...,
+    padding: Optional[str] = ...,
+    prompt: Optional[str] = ...,
     preview: Optional[str] = ...,
     # Display:
     ansi: bool = ...,
