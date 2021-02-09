@@ -1,10 +1,6 @@
 # `mkbak-iterfzf`: Pythonic interface to `fzf`
 
-[![Latest PyPI version](https://badge.fury.io/py/iterfzf.svg)](https://pypi.python.org/pypi/iterfzf)
-
-[![Build status (Travis CI)](https://travis-ci.org/dahlia/iterfzf.svg)](https://travis-ci.org/dahlia/iterfzf)
-
-[![Build status (AppVeyor)](https://ci.appveyor.com/api/projects/status/cf2eiuymdffvybl7?svg=true)](https://ci.appveyor.com/project/dahlia/iterfzf)
+[![PyPI version](https://badge.fury.io/py/mkbak-iterfzf.svg)](https://badge.fury.io/py/mkbak-iterfzf)
 
 ## `mkbak-iterfzf` is a fork of [iterfzf](https://github.com/dahlia/iterfzf/releases)
 
@@ -140,6 +136,11 @@ Set the height of the prompt. `'100%'` by default.
 Corresponds to `--height` option.
 
 *New in version 0.7.0*
+`padding`
+Padding inside border.
+
+Corresponds to the `--padding` option.
+
 `bind`  
 Custom key bindings. Refer to fzf's [man page](https://manpages.ubuntu.com/manpages/disco/man1/fzf.1.html#key%20bindings)
 

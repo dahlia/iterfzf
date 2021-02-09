@@ -23,7 +23,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 fzf_version = "0.25.1"
-version = "0.7" + fzf_version
+version = "0.7." + fzf_version
 release_url = (
     "https://api.github.com/repos/junegunn/fzf-bin/releases/tags/" + fzf_version
 )
@@ -318,6 +318,7 @@ setup(
     version=version,
     description="Pythonic interface to fzf",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/sudo-julia/mkbak-iterfzf",
     author="sudo-julia",
     author_email="jlearning" "@" "tuta.io",
