@@ -146,6 +146,11 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--ansi`` option.
 
+``select_1``
+   ``True`` to exit immediately if there is only one match. ``None`` by default.
+
+   Corresponds to ``--select-1`` option.
+
 
 
 Author and license
