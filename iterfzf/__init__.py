@@ -34,6 +34,7 @@ def iterfzf(
     prompt='> ',
     ansi=None,
     preview=None,
+    select_1=None,
     # Misc:
     query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
 ):
@@ -56,6 +57,8 @@ def iterfzf(
         cmd.append('--preview=' + preview)
     if ansi:
         cmd.append('--ansi')
+    if select_1:
+        cmd.append('--select-1')
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
