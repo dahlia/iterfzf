@@ -20,9 +20,9 @@ except ImportError:
 from setuptools import setup
 
 
-fzf_version = '0.20.0'
+fzf_version = '0.27.2'
 version = '0.5.' + fzf_version
-release_url = ('https://api.github.com/repos/junegunn/fzf-bin/releases/tags/' +
+release_url = ('https://api.github.com/repos/junegunn/fzf/releases/tags/' +
                fzf_version)
 asset_filename_re = re.compile(
     r'^fzf-(?P<ver>\d+\.\d+\.\d+)-'
