@@ -146,6 +146,14 @@ The following is the full list of parameters.  Please pass them as
 
    Corresponds to ``--ansi`` option.
 
+``filter_query``
+   The query string to be used. This differs from `query` in that this runs fzf
+   in non-interactive mode.
+
+   `None` by default.
+
+   Corresponds to ``--filter`` option.
+
 
 
 Author and license
@@ -195,7 +203,8 @@ Version 0.6.0.20.0
 
 To be released.  Bundles ``fzf`` 0.20.0.
 
-Added ``ansi`` option. [`#16` by Erik Lilja]
+- Added ``ansi`` option. [`#16` by Erik Lilja]
+- Added ``filter_query`` option. [`#2` by Sigve Sebastian Farstad]
 
 
 Version 0.5.0.20.0

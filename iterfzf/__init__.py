@@ -35,7 +35,8 @@ def iterfzf(
     ansi=None,
     preview=None,
     # Misc:
-    query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
+    filter_query=None, query='', encoding=None,
+    executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
 ):
     cmd = [executable, '--no-sort', '--prompt=' + prompt]
     if not extended:
@@ -56,6 +57,8 @@ def iterfzf(
         cmd.append('--preview=' + preview)
     if ansi:
         cmd.append('--ansi')
+    if filter_query is not None:
+        cmd.append('--filter=' + filter_query)
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
@@ -93,6 +96,12 @@ def iterfzf(
             if e.errno != errno.EPIPE and errno.EPIPE != 32:
                 raise
             break
+    if filter_query is not None:
+        try:
+            stdin.close()
+        except IOError as e:
+            if e.errno != errno.EPIPE:
+                raise
     if proc is None or proc.wait() not in [0, 1]:
         if print_query:
             return None, None
