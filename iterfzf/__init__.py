@@ -22,14 +22,13 @@ BUNDLED_EXECUTABLE = (
     )
 )
 
-
 def iterfzf(
     # CHECK: When the signature changes, __init__.pyi file should also change.
     iterable,
     # Search mode:
     extended=True, exact=False, case_sensitive=None,
     # Interface:
-    multi=False, mouse=True, print_query=False,
+    multi=False, mouse=True, print_query=False, header=None, color=None,
     # Layout:
     prompt='> ',
     ansi=None,
@@ -50,6 +49,10 @@ def iterfzf(
         cmd.append('--no-mouse')
     if print_query:
         cmd.append('--print-query')
+    if header:
+        cmd.append('--header=' + header)
+    if color:
+        cmd.append('--color=' + ','.join([str(k) + ':' + str(v) for k,v in color.items()]))
     if query:
         cmd.append('--query=' + query)
     if preview:
@@ -93,7 +96,10 @@ def iterfzf(
             if e.errno != errno.EPIPE and errno.EPIPE != 32:
                 raise
             break
-    if proc is None or proc.wait() not in [0, 1]:
+    exit_code = proc.wait() if proc else -1
+    if exit_code == 130:
+        raise KeyboardInterrupt()
+    if exit_code not in [0, 1]:
         if print_query:
             return None, None
         else:
@@ -101,6 +107,7 @@ def iterfzf(
     try:
         stdin.close()
     except IOError as e:
+        return e.errno
         if e.errno != errno.EPIPE and errno.EPIPE != 32:
             raise
     stdout = proc.stdout
