@@ -22,7 +22,6 @@ BUNDLED_EXECUTABLE = (
     )
 )
 
-
 def iterfzf(
     # CHECK: When the signature changes, __init__.pyi file should also change.
     iterable,
@@ -94,7 +93,10 @@ def iterfzf(
             if e.errno != errno.EPIPE and errno.EPIPE != 32:
                 raise
             break
-    if proc is None or proc.wait() not in [0, 1]:
+    exit_code = proc.wait() if proc else -1
+    if exit_code == 130:
+        raise KeyboardInterrupt()
+    if exit_code not in [0, 1]:
         if print_query:
             return None, None
         else:
@@ -102,6 +104,7 @@ def iterfzf(
     try:
         stdin.close()
     except IOError as e:
+        return e.errno
         if e.errno != errno.EPIPE and errno.EPIPE != 32:
             raise
     stdout = proc.stdout
