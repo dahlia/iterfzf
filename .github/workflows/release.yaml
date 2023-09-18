@@ -1,0 +1,56 @@
+name: release
+on:
+  push:
+    tags:
+    - "*.*.*"
+    branches:
+    - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/iterfzf
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+    - run: pip3 install build
+    - run: |
+        set -e
+        GOOS=darwin  GOARCH=amd64    python3 -m build --sdist --wheel .
+        GOOS=darwin  GOARCH=arm64    python3 -m build --sdist --wheel .
+        GOOS=freebsd GOARCH=amd64    python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=amd64    python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=arm64    python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=armv5    python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=armv6    python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=armv7    python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=ppc64le  python3 -m build --sdist --wheel .
+        GOOS=linux   GOARCH=s390x    python3 -m build --sdist --wheel .
+        GOOS=windows GOARCH=amd64    python3 -m build --sdist --wheel .
+        GOOS=windows GOARCH=arm64    python3 -m build --sdist --wheel .
+      shell: bash
+    - uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist
+    - if: github.ref_type == 'tag'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/iterfzf-*.tar.gz
+          dist/iterfzf-*.whl
+    - run: |
+        set -e
+        # Remove unsupported wheels
+        rm dist/iterfzf-*-freebsd_*.whl
+        rm dist/iterfzf-*-manylinux_1_2_armv*l.whl
+      shell: bash
+    - if: github.ref_type == 'tag'
+      uses: pypa/gh-action-pypi-publish@release/v1
