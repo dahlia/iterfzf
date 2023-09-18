@@ -1,43 +1,49 @@
 from __future__ import print_function
 
 import errno
-import os.path
+from os import fspath, PathLike
+from pathlib import Path
 import subprocess
 import sys
+from typing import AnyStr, Iterable, Literal, Optional
 
-from pkg_resources import resource_exists, resource_filename
+__all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 
-__all__ = 'BUNDLED_EXECUTABLE', 'iterfzf'
+__fzf_version__ = '0.42.0'
+__version__ = '0.6.' + __fzf_version__
 
-EXECUTABLE_NAME = 'fzf.exe' if sys.platform == 'win32' else 'fzf'
-BUNDLED_EXECUTABLE = (
-    resource_filename(__name__, EXECUTABLE_NAME)
-    if resource_exists(__name__, EXECUTABLE_NAME)
-    else (
-        os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME)
-        if os.path.isfile(
-            os.path.join(os.path.dirname(__file__), EXECUTABLE_NAME)
-        )
-        else None
-    )
-)
+
+POSIX_EXECUTABLE_NAME: Literal['fzf'] = 'fzf'
+WINDOWS_EXECUTABLE_NAME: Literal['fzf.exe'] = 'fzf.exe'
+EXECUTABLE_NAME: Literal['fzf', 'fzf.exe'] = \
+    WINDOWS_EXECUTABLE_NAME \
+    if sys.platform == 'win32' \
+    else POSIX_EXECUTABLE_NAME
+BUNDLED_EXECUTABLE: Optional[Path] = \
+    Path(__file__).parent / EXECUTABLE_NAME
 
 
 def iterfzf(
-    # CHECK: When the signature changes, __init__.pyi file should also change.
-    iterable,
+    iterable: Iterable[AnyStr],
+    *,
     # Search mode:
-    extended=True, exact=False, case_sensitive=None,
+    extended: bool = True,
+    exact: bool = False,
+    case_sensitive: bool = None,
     # Interface:
-    multi=False, mouse=True, print_query=False,
+    multi: bool = False,
+    mouse: bool = True,
+    print_query: bool = False,
     # Layout:
-    prompt='> ',
-    ansi=None,
-    preview=None,
+    prompt: str = '> ',
+    ansi: bool = False,
+    preview: Optional[str] = None,
     # Misc:
-    query='', encoding=None, executable=BUNDLED_EXECUTABLE or EXECUTABLE_NAME
+    query: str = '',
+    encoding: Optional[str] = None,
+    executable: PathLike = BUNDLED_EXECUTABLE or EXECUTABLE_NAME
 ):
-    cmd = [executable, '--no-sort', '--prompt=' + prompt]
+    cmd = [fspath(executable), '--no-sort', '--prompt=' + prompt]
     if not extended:
         cmd.append('--no-extended')
     if case_sensitive is not None:

@@ -190,12 +190,29 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 0.6.0.20.0
+Version 0.6.0.42.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` 0.20.0.
+To be released.  Bundles ``fzf`` `0.42.0`__.
 
-Added ``ansi`` option. [`#16` by Erik Lilja]
+- Dropped Python 2.7, 3.5, 3.6, and 3.7 supports.
+- Officially support Python 3.8, 3.9, 3.10, and 3.11.
+- Dropped FreeBSD i386, Linux i686, Linux armv8l, OpenBSD i386, and Windows
+  32-bit supports as fzf no longer supports them.
+- Dropped OpenBSD amd64 support.
+- Added ``ansi`` option. [`#16`__ by Erik Lilja]
+- The ``executable`` parameter now takes ``os.PathLike`` instead of ``str``,
+  which is backward compatible.
+- Added ``__version__`` and ``__fzf_version__`` attributes to the module.
+- Added ``POSIX_EXECUTABLE_NAME`` and ``WINDOWS_EXECUTABLE_NAME`` attributes
+  to the module.
+- Module attribute ``EXECUTABLE_NAME`` is now a ``Literal['fzf', 'fzf.exe']``
+  type, which is backward compatible with the previous ``str`` type.
+- Module attribute ``BUNDLED_EXECUTABLE`` is now ``Optional[pathlib.Path]``
+  type.
+
+__ https://github.com/junegunn/fzf/releases/tag/0.42.0
+__ https://github.com/dahlia/iterfzf/pull/16
 
 
 Version 0.5.0.20.0

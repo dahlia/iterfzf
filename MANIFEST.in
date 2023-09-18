@@ -1,3 +1,0 @@
-include fzf-*-release.json
-exclude iterfzf/fzf
-exclude iterfzf/fzf.exe
