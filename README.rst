@@ -186,10 +186,10 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 0.6.0.42.0
+Version 1.0.0.42.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.42.0`__.
+Released on September 18, 2023.  Bundles ``fzf`` `0.42.0`__.
 
 - Dropped Python 2.7, 3.5, 3.6, and 3.7 supports.
 - Officially support Python 3.8, 3.9, 3.10, and 3.11.
