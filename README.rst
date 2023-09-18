@@ -32,7 +32,7 @@ Key features
   input data is long but *streamed* from low latency network.
   It can begin to display items immediately after only *part* of items are
   ready, and *before* the complete items are ready.
-- Supports Python 2.7, 3.5 or higher.
+- Supports Python 3.8 or higher.
 
 __ https://github.com/dahlia/iterfzf/releases
 
