@@ -39,13 +39,13 @@ __ https://github.com/dahlia/iterfzf/releases
 
 .. _api reference:
 
-``iterfzf.iterfzf(iterable, **options)``
-----------------------------------------
+``iterfzf.iterfzf(iterable, *, **options)``
+-------------------------------------------
 
 Consumes the given ``iterable`` of strings, and displays them using ``fzf``.
 If a user chooses something it immediately returns the chosen things.
 
-The following is the full list of parameters.  Please pass them as
+The following is the full list of parameters.  Pass them as
 **keyword arguments** except for ``iterable`` which comes first:
 
 ``iterable`` (required)
@@ -196,6 +196,9 @@ Released on September 18, 2023.  Bundles ``fzf`` `0.42.0`__.
 - Dropped FreeBSD i386, Linux i686, Linux armv8l, OpenBSD i386, and Windows
   32-bit supports as fzf no longer supports them.
 - Dropped OpenBSD amd64 support.
+- Except the first parameter ``iterable``, all parameters are enforced to be
+  keyword-only.  (Note that it's always been the recommended way to pass
+  options, although it was not enforced.)
 - Added ``ansi`` option. [`#16`__ by Erik Lilja]
 - The ``executable`` parameter now takes ``os.PathLike`` instead of ``str``,
   which is backward compatible.
