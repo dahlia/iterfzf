@@ -12,7 +12,9 @@ import shutil
 import sys
 import tarfile
 from tempfile import NamedTemporaryFile
-from urllib.request import HTTPError, Request, urlopen
+import time
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 import warnings
 from zipfile import ZipFile
 
@@ -43,14 +45,13 @@ asset_filename_re = re.compile(
 fzf_bin_path = os.path.join(os.path.dirname(__file__), 'iterfzf', 'fzf')
 fzf_windows_bin_path = os.path.join(os.path.dirname(__file__),
                                     'iterfzf', 'fzf.exe')
-urllib_retry = 3
 wheel_filename_platform_tag_pattern = re.compile(
     r'(?<=-py3-none-)any(?=\.whl$)',
     re.IGNORECASE
 )
 
 
-def download_fzf_release_json(access_token=None):
+def download_fzf_release_json(access_token=None, retry=3):
     if access_token:
         request = Request(
             release_url,
@@ -61,7 +62,15 @@ def download_fzf_release_json(access_token=None):
     try:
         r = urlopen(request)
     except HTTPError as e:
-        if e.code == 403 and e.info().get('X-RateLimit-Remaining') == 0:
+        if e.code == 403 and e.info().get('X-RateLimit-Remaining') == '0':
+            if retry:
+                reset = e.info().get('X-RateLimit-Reset')
+                time.sleep(
+                    int(reset) - time.time()
+                    if reset and reset.isdigit()
+                    else 5
+                )
+                return download_fzf_release_json(access_token, retry - 1)
             raise RuntimeError(
                 'GitHub rate limit reached. To increase the limit configure '
                 'environment variable GITHUB_TOKEN.\n  ' + str(e)
@@ -127,7 +136,13 @@ def extract(stream, ext, extract_to):
             raise ValueError('unsupported file format: ' + repr(ext))
 
 
-def download_fzf_binary(goos, goarch, overwrite=False, access_token=None):
+def download_fzf_binary(
+    goos,
+    goarch,
+    overwrite=False,
+    access_token=None,
+    retry=3,
+):
     bin_path = fzf_windows_bin_path if goos == 'windows' else fzf_bin_path
     if overwrite and os.path.isfile(bin_path):
         os.unlink(fzf_bin_path)
@@ -141,7 +156,21 @@ def download_fzf_binary(goos, goarch, overwrite=False, access_token=None):
         try:
             r = urlopen(url)
         except HTTPError as e:
-            if e.code == 403 and e.info().get('X-RateLimit-Remaining') == 0:
+            if e.code == 403 and e.info().get('X-RateLimit-Remaining') == '0':
+                if retry:
+                    reset = e.info().get('X-RateLimit-Reset')
+                    time.sleep(
+                        int(reset) - time.time()
+                        if reset and reset.isdigit()
+                        else 5
+                    )
+                    return download_fzf_binary(
+                        goos,
+                        goarch,
+                        overwrite=overwrite,
+                        access_token=access_token,
+                        retry=retry - 1,
+                    )
                 raise RuntimeError(
                     'GitHub rate limit reached. To increate the limit use '
                     '-g/--github-access-token option.\n  ' + str(e)
