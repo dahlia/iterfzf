@@ -1,0 +1,33 @@
+name: test
+on:
+  pull_request: {}
+  push:
+    branches:
+    - "*"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        python-version:
+        - "3.8"
+        - "3.9"
+        - "3.10"
+        - "3.11"
+        - pypy3.10
+        os:
+        - macos-latest
+        - ubuntu-latest
+        - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - uses: ymyzk/run-tox-gh-actions@main
+      with:
+        tox-version: ">=4"
+        tox-gh-actions-version: ">=3"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}

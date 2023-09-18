@@ -1,17 +1,13 @@
 ``iterfzf``: Pythonic interface to ``fzf``
 ==========================================
 
-.. image:: https://badge.fury.io/py/iterfzf.svg
-   :target: https://pypi.python.org/pypi/iterfzf
+.. image:: https://img.shields.io/pypi/v/iterfzf
+   :target: https://pypi.org/project/iterfzf/
    :alt: Latest PyPI version
 
-.. image:: https://travis-ci.org/dahlia/iterfzf.svg
-   :alt: Build status (Travis CI)
-   :target: https://travis-ci.org/dahlia/iterfzf
-
-.. image:: https://ci.appveyor.com/api/projects/status/cf2eiuymdffvybl7?svg=true
-   :target: https://ci.appveyor.com/project/dahlia/iterfzf
-   :alt: Build status (AppVeyor)
+.. image:: https://github.com/dahlia/iterfzf/actions/workflows/test.yaml/badge.svg
+   :alt: Build status (GitHub Actions)
+   :target: https://github.com/dahlia/iterfzf/actions/workflows/test.yaml
 
 
 Demo session

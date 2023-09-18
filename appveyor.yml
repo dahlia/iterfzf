@@ -1,7 +1,0 @@
-version: "{branch}.{build}"
-build: off
-shallow_clone: true
-install:
-- C:\Python27-x64\Scripts\pip.exe install tox
-test_script:
-- C:\Python27-x64\Scripts\tox.exe -r --skip-missing-interpreters -- -O --github-access-token=%GITHUB_ACCESS_TOKEN%

@@ -1,9 +1,0 @@
-image: themattrix/tox
-pipelines:
-  default:
-  - step:
-      script:
-      - tox
-      - '[[ "$BITBUCKET_TAG" = "" ]] || [[ "$BITBUCKET_TAG" = "$(python setup.py --version)" ]]'
-      - '[[ "$BITBUCKET_TAG" = "" ]] || grep "Version $BITBUCKET_TAG" README.rst'
-      - '[[ "$BITBUCKET_TAG" = "" ]] || ! grep -i "to be released" README.rst'

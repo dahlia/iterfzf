@@ -11,3 +11,7 @@ tab_width = 4
 
 [*.py]
 max_line_length = 79
+
+[*.{yaml,yml}]
+indent_size = 2
+tab_width = 2
