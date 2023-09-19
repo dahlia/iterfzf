@@ -9,27 +9,29 @@ jobs:
   test:
     strategy:
       matrix:
-        python-version:
-        - "3.8"
-        - "3.9"
-        - "3.10"
-        - "3.11"
-        - pypy3.10
         os:
         - macos-latest
         - ubuntu-latest
         - windows-latest
-      max-parallel: 1
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
-    - uses: ymyzk/run-tox-gh-actions@main
-      with:
-        tox-version: ">=4"
-        tox-gh-actions-version: ">=3"
+        python-version: |
+          3.8
+          3.9
+          3.10
+          3.11
+          pypy3.10
+    - uses: install-pinned/tox@9977353bc5a21c2a433f7ff4419a1d6ef036b4ba
+    - run: |
+        set -e
+        if [[ "$RUNNER_DEBUG" = "1" ]]; then
+          debug_options="--verbose"
+        fi
+        tox --exit-and-dump-after 60 $debug_options
+      shell: bash
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
