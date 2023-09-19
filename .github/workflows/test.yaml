@@ -10,9 +10,11 @@ jobs:
     strategy:
       matrix:
         os:
-        - macos-latest
         - ubuntu-latest
         - windows-latest
+        # FIXME Temporarily disabled macOS as tox hangs on it for some unknown
+        # reason, even though it works fine locally:
+        # - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
