@@ -6,6 +6,7 @@ pip.
 import json
 import os
 import os.path
+from pathlib import Path
 import platform
 import re
 import shutil
@@ -35,16 +36,14 @@ release_url = ('https://api.github.com/repos/junegunn/fzf/releases/tags/' +
                __fzf_version__)
 github_token = os.environ.get('GITHUB_TOKEN')
 fzf_release_filename = 'fzf-{0}-release.json'.format(__fzf_version__)
-fzf_release_path = os.path.join(os.path.dirname(__file__), 'iterfzf',
-                                fzf_release_filename)
+fzf_release_path = Path(__file__).parent / 'iterfzf' / fzf_release_filename
 asset_filename_re = re.compile(
     r'^fzf-(?P<ver>\d+\.\d+\.\d+)-'
     r'(?P<goos>[^-_]+)_(?P<goarch>[^.]+)'
     r'.(?P<ext>tgz|tar\.gz|tar\.bz2|zip)$'
 )
-fzf_bin_path = os.path.join(os.path.dirname(__file__), 'iterfzf', 'fzf')
-fzf_windows_bin_path = os.path.join(os.path.dirname(__file__),
-                                    'iterfzf', 'fzf.exe')
+fzf_bin_path = Path(__file__).parent / 'iterfzf' / 'fzf'
+fzf_windows_bin_path = fzf_bin_path.parent / 'fzf.exe'
 wheel_filename_platform_tag_pattern = re.compile(
     r'(?<=-py3-none-)any(?=\.whl$)',
     re.IGNORECASE
@@ -81,7 +80,7 @@ def download_fzf_release_json(access_token=None, retry=3):
     d = r.read().decode("utf-8")
     r.close()
     try:
-        with open(fzf_release_path, 'w', encoding='utf-8') as f:
+        with fzf_release_path.open('w', encoding='utf-8') as f:
             f.write(d)
     except IOError:
         pass
@@ -90,7 +89,7 @@ def download_fzf_release_json(access_token=None, retry=3):
 
 def get_fzf_release(access_token=None):
     try:
-        with open(fzf_release_path, encoding='utf-8') as f:
+        with fzf_release_path.open(encoding='utf-8') as f:
             return json.load(f)
     except IOError:
         return download_fzf_release_json(access_token)
@@ -110,7 +109,7 @@ def get_fzf_binary_url(goos, goarch, access_token=None):
             return asset['browser_download_url'], m.group('ext')
 
 
-def extract(stream, ext, extract_to):
+def extract(stream, ext, extract_to: Path):
     with NamedTemporaryFile() as tmp:
         shutil.copyfileobj(stream, tmp)
         tmp.flush()
@@ -119,7 +118,7 @@ def extract(stream, ext, extract_to):
             z = ZipFile(tmp, 'r')
             try:
                 info, = z.infolist()
-                with open(extract_to, 'wb') as f:
+                with extract_to.open('wb') as f:
                     f.write(z.read(info))
             finally:
                 z.close()
@@ -128,7 +127,7 @@ def extract(stream, ext, extract_to):
             try:
                 member, = [m for m in tar.getmembers() if m.isfile()]
                 rf = tar.extractfile(member)
-                with open(extract_to, 'wb') as wf:
+                with extract_to.open('wb') as wf:
                     shutil.copyfileobj(rf, wf)
             finally:
                 tar.close()
@@ -143,12 +142,12 @@ def download_fzf_binary(
     access_token=None,
     retry=3,
 ):
+    if overwrite and fzf_bin_path.is_file():
+        fzf_bin_path.unlink()
+    if overwrite and fzf_windows_bin_path.is_file():
+        fzf_windows_bin_path.unlink()
     bin_path = fzf_windows_bin_path if goos == 'windows' else fzf_bin_path
-    if overwrite and os.path.isfile(bin_path):
-        os.unlink(fzf_bin_path)
-    if overwrite and os.path.isfile(fzf_windows_bin_path):
-        os.unlink(fzf_windows_bin_path)
-    if not os.path.isfile(bin_path):
+    if not bin_path.is_file():
         asset = get_fzf_binary_url(goos, goarch, access_token)
         url, ext = asset
         if access_token:
@@ -180,9 +179,9 @@ def download_fzf_binary(
             raise
         extract(r, ext, bin_path)
         r.close()
-    mode = os.stat(bin_path).st_mode
+    mode = bin_path.stat().st_mode
     if not (mode & 0o111):
-        os.chmod(bin_path, mode | 0o111)
+        bin_path.chmod(mode | 0o111)
 
 
 # Map from pairs of GOOS and GOARCH to Python platform tags.  Note that
