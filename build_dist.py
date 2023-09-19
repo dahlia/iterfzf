@@ -21,9 +21,10 @@ from zipfile import ZipFile
 
 from flit_core import buildapi
 
-from iterfzf import __fzf_version__, __version__
+from iterfzf import __fzf_version__
 
 __all__ = [
+    '__fzf_version__',
     'build_editable',
     'build_sdist',
     'build_wheel',
@@ -31,9 +32,9 @@ __all__ = [
     'get_requires_for_build_wheel',
 ]
 
+release_url = f'''https://api.github.com/repos/junegunn/fzf/releases/tags/{
+    __fzf_version__}'''
 
-release_url = ('https://api.github.com/repos/junegunn/fzf/releases/tags/' +
-               __fzf_version__)
 github_token = os.environ.get('GITHUB_TOKEN')
 fzf_release_filename = 'fzf-{0}-release.json'.format(__fzf_version__)
 fzf_release_path = Path(__file__).parent / 'iterfzf' / fzf_release_filename
@@ -45,8 +46,7 @@ asset_filename_re = re.compile(
 fzf_bin_path = Path(__file__).parent / 'iterfzf' / 'fzf'
 fzf_windows_bin_path = fzf_bin_path.parent / 'fzf.exe'
 wheel_filename_platform_tag_pattern = re.compile(
-    r'(?<=-py3-none-)any(?=\.whl$)',
-    re.IGNORECASE
+    r'(?<=-py3-none-)any(?=\.whl$)', re.IGNORECASE
 )
 
 
@@ -65,9 +65,8 @@ def download_fzf_release_json(access_token=None, retry=3):
             if retry:
                 reset = e.info().get('X-RateLimit-Reset')
                 time.sleep(
-                    int(reset) - time.time()
-                    if reset and reset.isdigit()
-                    else 5
+                    int(reset) -
+                    time.time() if reset and reset.isdigit() else 5
                 )
                 return download_fzf_release_json(access_token, retry - 1)
             raise RuntimeError(
@@ -159,9 +158,8 @@ def download_fzf_binary(
                 if retry:
                     reset = e.info().get('X-RateLimit-Reset')
                     time.sleep(
-                        int(reset) - time.time()
-                        if reset and reset.isdigit()
-                        else 5
+                        int(reset) -
+                        time.time() if reset and reset.isdigit() else 5
                     )
                     return download_fzf_binary(
                         goos,
@@ -211,7 +209,7 @@ goos_goarch_platform_tag_map = {
     ("linux",   "s390x"):   "manylinux_2_17_s390x.manylinux2014_s390x",
     ("windows", "amd64"):   "win_amd64",
     ("windows", "arm64"):   "win_arm64",
-}
+}  # yapf: disable
 
 # Map from pairs of Python sys.platform and platform.machine() to
 # pairs of GOOS and GOARCH.  The order of the keys corresponds to
@@ -234,7 +232,7 @@ platform_machine_goos_goarch_map = {
     ("win32",       "aarch64"):        ("windows", "arm64"),
     ("cygwin",      "x86_64"):         ("windows", "amd64"),
     ("cygwin",      "aarch64"):        ("windows", "arm64"),
-}
+}  # yapf: disable
 
 
 def get_goos_goarch():
@@ -243,11 +241,13 @@ def get_goos_goarch():
     if goos and not goarch:
         warnings.warn(
             "GOOS is ignored because GOARCH is not set; they must be set "
-            "together")
+            "together"
+        )
     elif goarch and not goos:
         warnings.warn(
             "GOARCH is ignored because GOOS is not set; they must be set "
-            "together")
+            "together"
+        )
     elif goos and goarch:
         return goos, goarch
     key = sys.platform, platform.machine()
@@ -277,8 +277,7 @@ def build_wheel(
     goos, goarch = get_goos_goarch()
     platform_tag = goos_goarch_platform_tag_map[goos, goarch]
     new_filename = wheel_filename_platform_tag_pattern.sub(
-        platform_tag,
-        wheel_filename
+        platform_tag, wheel_filename
     )
     os.rename(
         os.path.join(wheel_directory, wheel_filename),
@@ -293,6 +292,7 @@ def build_sdist(sdist_directory, config_settings=None):
 
 
 if callable(getattr(buildapi, "build_editable", None)):
+
     def build_editable(
         wheel_directory, config_settings=None, metadata_directory=None
     ):
@@ -325,7 +325,6 @@ if callable(getattr(buildapi, "prepare_metadata_for_build_wheel", None)):
         buildapi.prepare_metadata_for_build_wheel
     )
     __all__.append("prepare_metadata_for_build_wheel")
-
 
 if callable(getattr(buildapi, "prepare_metadata_for_build_editable", None)):
     prepare_metadata_for_build_editable = (

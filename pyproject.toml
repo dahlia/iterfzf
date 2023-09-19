@@ -45,3 +45,14 @@ build-backend = "build_dist"
 [tool.flit.sdist]
 include = ["build_dist.py", "iterfzf/fzf-*-release.json"]
 exclude = ["iterfzf/fzf", "itefzf/fzf.exe"]
+
+[tool.yapfignore]
+ignore_patterns = [
+  ".tox"
+]
+
+[tool.yapf]
+based_on_style = "pep8"
+column_limit = 79
+dedent_closing_brackets = true
+indent_dictionary_value = true

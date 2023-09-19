@@ -12,7 +12,6 @@ __all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 __fzf_version__ = '0.42.0'
 __version__ = '1.0.' + __fzf_version__
 
-
 POSIX_EXECUTABLE_NAME: Literal['fzf'] = 'fzf'
 WINDOWS_EXECUTABLE_NAME: Literal['fzf.exe'] = 'fzf.exe'
 EXECUTABLE_NAME: Literal['fzf', 'fzf.exe'] = \
@@ -80,8 +79,10 @@ def iterfzf(
                 'unicode strings, not mixed of them: ' + repr(line)
             )
         if lf in line or cr in line:
-            raise ValueError(r"element values must not contain CR({1!r})/"
-                             r"LF({2!r}): {0!r}".format(line, cr, lf))
+            raise ValueError(
+                r"element values must not contain CR({1!r})/"
+                r"LF({2!r}): {0!r}".format(line, cr, lf)
+            )
         if proc is None:
             proc = subprocess.Popen(
                 cmd,
