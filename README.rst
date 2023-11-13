@@ -142,6 +142,13 @@ The following is the full list of parameters.  Pass them as
 
    Corresponds to ``--ansi`` option.
 
+``cycle``
+   ``True`` to enable cycling scrolling.
+
+   ``False`` by default.
+
+   Corresponds to ``-cycle`` option.
+
 
 
 Author and license
