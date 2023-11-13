@@ -39,6 +39,7 @@ def iterfzf(
     preview: Optional[str] = None,
     # Misc:
     query: str = '',
+    cycle: bool = False,
     encoding: Optional[str] = None,
     executable: PathLike = BUNDLED_EXECUTABLE or EXECUTABLE_NAME
 ):
@@ -61,6 +62,8 @@ def iterfzf(
         cmd.append('--preview=' + preview)
     if ansi:
         cmd.append('--ansi')
+    if cycle:
+        cmd.append('--cycle')
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
