@@ -193,6 +193,16 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
+Version 1.1.0.42.0
+~~~~~~~~~~~~~~~~~~
+
+To be released.
+
+- Added ``cycle`` option.  [`#33`__ by Daniele Trifirò]
+
+__ https://github.com/dahlia/iterfzf/pull/33
+
+
 Version 1.0.0.42.0
 ~~~~~~~~~~~~~~~~~~
 
@@ -206,7 +216,7 @@ Released on September 18, 2023.  Bundles ``fzf`` `0.42.0`__.
 - Except the first parameter ``iterable``, all parameters are enforced to be
   keyword-only.  (Note that it's always been the recommended way to pass
   options, although it was not enforced.)
-- Added ``ansi`` option. [`#16`__ by Erik Lilja]
+- Added ``ansi`` option.  [`#16`__ by Erik Lilja]
 - The ``executable`` parameter now takes ``os.PathLike`` instead of ``str``,
   which is backward compatible.
 - Added ``__version__`` and ``__fzf_version__`` attributes to the module.
