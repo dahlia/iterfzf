@@ -193,13 +193,14 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 1.1.0.42.0
+Version 1.1.0.44.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.
+To be released.  Bundles ``fzf`` `0.44.0`__.
 
 - Added ``cycle`` option.  [`#33`__ by Daniele Trifirò]
 
+__ https://github.com/junegunn/fzf/releases/tag/0.44.0
 __ https://github.com/dahlia/iterfzf/pull/33
 
 

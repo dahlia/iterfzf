@@ -9,7 +9,7 @@ from typing import AnyStr, Iterable, Literal, Optional
 
 __all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 
-__fzf_version__ = '0.42.0'
+__fzf_version__ = '0.44.0'
 __version__ = '1.0.' + __fzf_version__
 
 POSIX_EXECUTABLE_NAME: Literal['fzf'] = 'fzf'
