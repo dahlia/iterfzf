@@ -147,7 +147,12 @@ The following is the full list of parameters.  Pass them as
 
    ``False`` by default.
 
-   Corresponds to ``-cycle`` option.
+   Corresponds to ``--cycle`` option.
+
+``__extra__``
+    The iterable of extra raw options/arguments to pass to ``fzf``.
+
+    Empty by default.
 
 
 
@@ -199,9 +204,11 @@ Version 1.1.0.44.0
 To be released.  Bundles ``fzf`` `0.44.0`__.
 
 - Added ``cycle`` option.  [`#33`__ by Daniele Trifirò]
+- Added ``__extra__`` option.  [`#32`__]
 
 __ https://github.com/junegunn/fzf/releases/tag/0.44.0
 __ https://github.com/dahlia/iterfzf/pull/33
+__ https://github.com/dahlia/iterfzf/issues/32
 
 
 Version 1.0.0.42.0
