@@ -201,7 +201,7 @@ is 3.4.5.
 Version 1.1.0.44.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.44.0`__.
+Released on November 18, 2023.  Bundles ``fzf`` `0.44.0`__.
 
 - Added ``cycle`` option.  [`#33`__ by Daniele Trifirò]
 - Added ``__extra__`` option.  [`#32`__]
