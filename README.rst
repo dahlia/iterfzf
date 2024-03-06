@@ -198,15 +198,15 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 1.2.0.44.0
+Version 1.2.0.46.1
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.44.0`__.
+To be released.  Bundles ``fzf`` `0.46.1`__.
 
 - Close stdin before waiting to allow ``--select-1`` to work.
   [`#34`__ by Alex Wood]
 
-__ https://github.com/junegunn/fzf/releases/tag/0.44.0
+__ https://github.com/junegunn/fzf/releases/tag/0.46.1
 __ https://github.com/dahlia/iterfzf/pull/34
 
 
