@@ -198,6 +198,14 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
+Version 1.3.0.46.1
+~~~~~~~~~~~~~~~~~~
+
+To be released.  Bundles ``fzf`` `0.46.1`__.
+
+__ https://github.com/junegunn/fzf/releases/tag/0.46.1
+
+
 Version 1.2.0.46.1
 ~~~~~~~~~~~~~~~~~~
 
