@@ -25,6 +25,8 @@ BUNDLED_EXECUTABLE: Optional[Path] = \
 def iterfzf(
     iterable: Iterable[AnyStr],
     *,
+    # Sorting:
+    sort: bool = False,
     # Search mode:
     extended: bool = True,
     exact: bool = False,
@@ -44,7 +46,9 @@ def iterfzf(
     encoding: Optional[str] = None,
     executable: PathLike = BUNDLED_EXECUTABLE or EXECUTABLE_NAME
 ):
-    cmd = [fspath(executable), '--no-sort', '--prompt=' + prompt]
+    cmd = [fspath(executable), '--prompt=' + prompt]
+    if not sort:
+        cmd.append('--no-sort')
     if not extended:
         cmd.append('--no-extended')
     if case_sensitive is not None:

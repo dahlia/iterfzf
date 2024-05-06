@@ -203,7 +203,11 @@ Version 1.3.0.46.1
 
 To be released.  Bundles ``fzf`` `0.46.1`__.
 
+- Added ``sort`` option.  [`#18`__, `#35`__ by Gregory.K]
+
 __ https://github.com/junegunn/fzf/releases/tag/0.46.1
+__ https://github.com/dahlia/iterfzf/issues/18
+__ https://github.com/dahlia/iterfzf/pull/35
 
 
 Version 1.2.0.46.1
