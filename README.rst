@@ -77,6 +77,13 @@ The following is the full list of parameters.  Pass them as
 
    Corresponds to ``-m``/``--multi`` option.
 
+``bind``
+   The key/event bindings to pass to ``fzf``.
+
+   Dictionary of the form {KEY: ACTION} or {EVENT: ACTION}.
+
+   Corresponds to ``--bind=KEYBINDS`` option.
+
 ``print_query``
    If ``True`` the return type is a tuple where the first element is the query
    the user actually typed, and the second element is the selected output as
