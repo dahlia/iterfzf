@@ -116,7 +116,7 @@ def extract(stream, ext, extract_to: Path):
         if ext == 'zip':
             z = ZipFile(tmp, 'r')
             try:
-                info, = z.infolist()
+                info = z.infolist()[0]
                 with extract_to.open('wb') as f:
                     f.write(z.read(info))
             finally:
