@@ -203,7 +203,7 @@ is 3.4.5.
 Version 1.3.0.51.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.51.0`__.
+Released on May 6, 2024.  Bundles ``fzf`` `0.51.0`__.
 
 - Added ``sort`` option.  [`#18`__, `#35`__ by Gregory.K]
 - Officially support Python 3.12.
