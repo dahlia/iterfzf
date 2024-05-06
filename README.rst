@@ -59,6 +59,9 @@ The following is the full list of parameters.  Pass them as
    returns bytes.  If they are Unicode strings it returns Unicode strings.
    See also the ``encoding`` parameter.
 
+``sort``
+   Sorts the result if ``True``.  ``False`` by default.
+
 ``multi``
    ``True`` to let the user to choose more than one.  A user can select
    items with tab/shift-tab.  If ``multi=True`` the function returns a list of
@@ -155,7 +158,6 @@ The following is the full list of parameters.  Pass them as
     Empty by default.
 
 
-
 Author and license
 ------------------
 
@@ -204,6 +206,7 @@ Version 1.3.0.46.1
 To be released.  Bundles ``fzf`` `0.46.1`__.
 
 - Added ``sort`` option.  [`#18`__, `#35`__ by Gregory.K]
+- Officially support Python 3.12.
 
 __ https://github.com/junegunn/fzf/releases/tag/0.46.1
 __ https://github.com/dahlia/iterfzf/issues/18
