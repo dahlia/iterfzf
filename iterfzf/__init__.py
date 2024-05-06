@@ -30,7 +30,7 @@ def iterfzf(
     # Search mode:
     extended: bool = True,
     exact: bool = False,
-    case_sensitive: bool = None,
+    case_sensitive: Optional[bool] = None,
     # Interface:
     multi: bool = False,
     mouse: bool = True,
