@@ -62,7 +62,7 @@ def iterfzf(
         cmd.append('--no-mouse')
     if bind:
         bind_options = ','.join(
-            [r"{}:{}".format(key, action) for key, action in bind.items()]
+            r"{}:{}".format(key, action) for key, action in bind.items()
         )
         cmd.append('--bind=' + bind_options)
     if print_query:
