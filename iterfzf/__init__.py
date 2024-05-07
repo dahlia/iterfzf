@@ -5,7 +5,7 @@ from os import fspath, PathLike
 from pathlib import Path
 import subprocess
 import sys
-from typing import AnyStr, Iterable, Literal, Optional, Dict
+from typing import AnyStr, Iterable, Literal, Mapping, Optional
 
 __all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 
@@ -34,7 +34,7 @@ def iterfzf(
     # Interface:
     multi: bool = False,
     mouse: bool = True,
-    bind: Optional[Dict[str, str]] = None,
+    bind: Optional[Mapping[str, str]] = None,
     print_query: bool = False,
     # Layout:
     prompt: str = '> ',
