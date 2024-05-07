@@ -207,12 +207,24 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 1.4.0.51.0
+Version 1.5.0.51.0
 ~~~~~~~~~~~~~~~~~~
 
 To be released.  Bundles ``fzf`` `0.51.0`__.
 
 __ https://github.com/junegunn/fzf/releases/tag/0.51.0
+
+
+Version 1.4.0.51.0
+~~~~~~~~~~~~~~~~~~
+
+Released on May 7, 2024.  Bundles ``fzf`` `0.51.0`__.
+
+- Added ``bind`` option. [`#21`__, `#36`__ by Gregory.K]
+
+__ https://github.com/junegunn/fzf/releases/tag/0.51.0
+__ https://github.com/dahlia/iterfzf/issues/21
+__ https://github.com/dahlia/iterfzf/pull/36
 
 
 Version 1.3.0.51.0
