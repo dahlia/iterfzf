@@ -5,7 +5,7 @@ from os import fspath, PathLike
 from pathlib import Path
 import subprocess
 import sys
-from typing import AnyStr, Iterable, Literal, Optional
+from typing import AnyStr, Iterable, Literal, Mapping, Optional
 
 __all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 
@@ -30,10 +30,11 @@ def iterfzf(
     # Search mode:
     extended: bool = True,
     exact: bool = False,
-    case_sensitive: bool = None,
+    case_sensitive: Optional[bool] = None,
     # Interface:
     multi: bool = False,
     mouse: bool = True,
+    bind: Optional[Mapping[str, str]] = None,
     print_query: bool = False,
     # Layout:
     prompt: str = '> ',
@@ -59,6 +60,11 @@ def iterfzf(
         cmd.append('--multi')
     if not mouse:
         cmd.append('--no-mouse')
+    if bind:
+        bind_options = ','.join(
+            r"{}:{}".format(key, action) for key, action in bind.items()
+        )
+        cmd.append('--bind=' + bind_options)
     if print_query:
         cmd.append('--print-query')
     if query:

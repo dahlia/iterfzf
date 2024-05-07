@@ -77,6 +77,13 @@ The following is the full list of parameters.  Pass them as
 
    Corresponds to ``-m``/``--multi`` option.
 
+``bind``
+   The key/event bindings to pass to ``fzf``.
+
+   Dictionary of the form {KEY: ACTION} or {EVENT: ACTION}.
+
+   Corresponds to ``--bind=KEYBINDS`` option.
+
 ``print_query``
    If ``True`` the return type is a tuple where the first element is the query
    the user actually typed, and the second element is the selected output as
@@ -200,12 +207,24 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 1.4.0.51.0
+Version 1.5.0.51.0
 ~~~~~~~~~~~~~~~~~~
 
 To be released.  Bundles ``fzf`` `0.51.0`__.
 
 __ https://github.com/junegunn/fzf/releases/tag/0.51.0
+
+
+Version 1.4.0.51.0
+~~~~~~~~~~~~~~~~~~
+
+Released on May 7, 2024.  Bundles ``fzf`` `0.51.0`__.
+
+- Added ``bind`` option. [`#21`__, `#36`__ by Gregory.K]
+
+__ https://github.com/junegunn/fzf/releases/tag/0.51.0
+__ https://github.com/dahlia/iterfzf/issues/21
+__ https://github.com/dahlia/iterfzf/pull/36
 
 
 Version 1.3.0.51.0
