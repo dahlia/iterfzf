@@ -32,7 +32,7 @@ __all__ = [
     'get_requires_for_build_wheel',
 ]
 
-release_url = f'''https://api.github.com/repos/junegunn/fzf/releases/tags/{
+release_url = f'''https://api.github.com/repos/junegunn/fzf/releases/tags/v{
     __fzf_version__}'''
 
 github_token = os.environ.get('GITHUB_TOKEN')
