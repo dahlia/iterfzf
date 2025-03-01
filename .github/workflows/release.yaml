@@ -37,7 +37,7 @@ jobs:
         GOOS=windows GOARCH=amd64    python3 -m build --sdist --wheel .
         GOOS=windows GOARCH=arm64    python3 -m build --sdist --wheel .
       shell: bash
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist
