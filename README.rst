@@ -210,12 +210,12 @@ is 3.4.5.
 Version 1.5.0.60.2
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.60.2`__.
+Released on March 5, 2025.  Bundles ``fzf`` `0.60.2`__.
 
 - Added support for raising ``KeyboardInterrupt``.  [`#40`__ by Phred Lane]
 - Officially support Python 3.13.
 
-__ https://github.com/junegunn/fzf/releases/tag/v0.54.3
+__ https://github.com/junegunn/fzf/releases/tag/v0.60.2
 __ https://github.com/dahlia/iterfzf/pull/40
 
 
