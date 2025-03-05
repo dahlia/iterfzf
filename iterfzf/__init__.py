@@ -20,6 +20,7 @@ EXECUTABLE_NAME: Literal['fzf', 'fzf.exe'] = \
     else POSIX_EXECUTABLE_NAME
 BUNDLED_EXECUTABLE: Optional[Path] = \
     Path(__file__).parent / EXECUTABLE_NAME
+INTERRUPT_EXIT_CODE: int = 130
 
 
 def iterfzf(
@@ -121,7 +122,11 @@ def iterfzf(
     except IOError as e:
         if e.errno != errno.EPIPE and errno.EPIPE != 32:
             raise
-    if proc is None or proc.wait() not in [0, 1]:
+    exit_code = proc.wait() if proc else -1
+    if exit_code == INTERRUPT_EXIT_CODE:
+        raise KeyboardInterrupt()
+
+    if exit_code not in [0, 1]:
         if print_query:
             return None, None
         else:
