@@ -18,15 +18,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: |
           3.8
           3.9
           3.10
           3.11
+          3.12
+          3.13
           pypy3.10
-    - uses: install-pinned/tox@9977353bc5a21c2a433f7ff4419a1d6ef036b4ba
+    - uses: install-pinned/tox@36b53081efa7a6522c78c2f5ebc40c55b60463ef
     - run: |
         set -e
         if [[ "$RUNNER_DEBUG" = "1" ]]; then
