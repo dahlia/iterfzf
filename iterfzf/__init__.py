@@ -23,10 +23,11 @@ BUNDLED_EXECUTABLE: Optional[Path] = \
 INTERRUPT_EXIT_CODE: int = 130
 
 
-def format_option(option: Mapping[str,str]) -> str:
+def format_option(option: Mapping[str, str]) -> str:
     return ','.join(
         r"{}:{}".format(key, value) for key, value in option.items()
     )
+
 
 def iterfzf(
     iterable: Iterable[AnyStr],
