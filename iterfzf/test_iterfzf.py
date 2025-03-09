@@ -19,6 +19,14 @@ class IterFzfTest(unittest.TestCase):
         )
         self.assertEqual("Vanilla", choice)
 
+    def test_support_header_kwarg(self):
+        choice = iterfzf.iterfzf(
+            flavors, query="Vani", __extra__=["-1"], executable="fzf",
+            header="The header should not cause errors",
+        )
+        self.assertEqual("Vanilla", choice)
+
+
     def test_select_one_ambiguous(self):
         choice = iterfzf.iterfzf(
             flavors, query="Choc", __extra__=["-1"], executable="fzf"
