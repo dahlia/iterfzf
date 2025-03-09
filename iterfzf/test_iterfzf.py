@@ -14,20 +14,24 @@ class IterFzfTest(unittest.TestCase):
         self.assertEqual("Chocolate", choice)
 
     def test_supports_color_kwarg(self):
-        choice = iterfzf.iterfzf(flavors, executable="fzf", color={
-            "fg": "#d0d0d0",
-            "bg": "#121212",
-            "hl": "#5f87af",
-            "fg+": "#d0d0d0",
-            "bg+": "#262626",
-            "hl+": "#5fd7ff",
-            "info": "#afaf87",
-            "prompt": "#d7005f",
-            "pointer": "#af5fff",
-            "marker": "#87ff00",
-            "spinner": "#af5fff",
-            "header": "#87afaf",
-        })
+        choice = iterfzf.iterfzf(
+            flavors,
+            executable="fzf",
+            color={
+                "fg": "#d0d0d0",
+                "bg": "#121212",
+                "hl": "#5f87af",
+                "fg+": "#d0d0d0",
+                "bg+": "#262626",
+                "hl+": "#5fd7ff",
+                "info": "#afaf87",
+                "prompt": "#d7005f",
+                "pointer": "#af5fff",
+                "marker": "#87ff00",
+                "spinner": "#af5fff",
+                "header": "#87afaf",
+            }
+        )
         self.assertEqual("Chocolate", choice)
 
     def test_select_one(self):
