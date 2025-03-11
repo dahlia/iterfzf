@@ -224,7 +224,7 @@ is 3.4.5.
 Version 1.6.0.60.3
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.60.3`__.
+Released on March 11, 2025.  Bundles ``fzf`` `0.60.3`__.
 
 - Added ``header`` option.  [`#42`__ by Phred Lane]
 - Added ``color`` option.  [`#43`__ by Phred Lane]
