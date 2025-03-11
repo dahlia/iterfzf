@@ -47,6 +47,7 @@ def iterfzf(
     # Layout:
     prompt: str = '> ',
     ansi: bool = False,
+    header: str = '',
     preview: Optional[str] = None,
     # Misc:
     query: str = '',
@@ -78,6 +79,8 @@ def iterfzf(
         cmd.append('--query=' + query)
     if preview:
         cmd.append('--preview=' + preview)
+    if header:
+        cmd.append('--header=' + header)
     if ansi:
         cmd.append('--ansi')
     if cycle:

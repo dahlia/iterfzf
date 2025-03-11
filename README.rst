@@ -43,7 +43,8 @@ __ https://github.com/dahlia/iterfzf/releases
 -------------------------------------------
 
 Consumes the given ``iterable`` of strings, and displays them using ``fzf``.
-If a user chooses something it immediately returns the chosen things.
+If a user chooses something it immediately returns the chosen things. If the
+user cancels the selection, the `KeywordInterrupt` exception will be raised.
 
 The following is the full list of parameters.  Pass them as
 **keyword arguments** except for ``iterable`` which comes first:
@@ -59,110 +60,105 @@ The following is the full list of parameters.  Pass them as
    returns bytes.  If they are Unicode strings it returns Unicode strings.
    See also the ``encoding`` parameter.
 
-``sort``
-   Sorts the result if ``True``.  ``False`` by default.
 
-``multi``
-   ``True`` to let the user to choose more than one.  A user can select
-   items with tab/shift-tab.  If ``multi=True`` the function returns a list of
-   strings rather than a string.
+.. list-table:: Keyword Arguments
+   :widths: 12 12 12 50
+   :header-rows: 1
 
-   ``False`` to make a user possible to choose only one.  If ``multi=False``
-   it returns a string rather than a list.
+   * - Keyword Arg
+     - Default Value
+     - CLI Param
+     - Description
+   * - ``ansi``
+     - ``None``
+     - ``--ansi``
+     - ``True`` to enable ansi colors mode.
+   * - ``bind``
+     -
+     - ``--bind``
+     - The key/event bindings to pass to ``fzf``.
 
-   For both modes, the function returns ``None`` if nothing is matched or
-   a user cancelled.
+       Dictionary of the form {KEY: ACTION} or {EVENT: ACTION}.
+   * - ``case_sensitive``
+     - ``None``
+     - ``--smart-case``
+     - ``True`` for case sensitivity, and ``False`` for case insensitivity.
+       ``None``, the default, for smart-case match.
 
-   ``False`` by default.
+       ``True`` corresponds to ``+i`` option and ``False`` corresponds to
+       ``-i`` option.
+   * - ``cycle``
+     - ``False``
+     - ``--cycle``
+     - ``True`` to enable cycling scrolling.
+   * - ``encoding``
+     - ``sys.getdefaultencoding()``
+     - ``--encoding``
+     - The text encoding name (e.g. ``'utf-8'``, ``'ascii'``) to be used for
+       encoding ``iterable`` values and decoding return values.  It's ignored
+       when the ``iterable`` values are byte strings.
+   * - ``exact``
+     - ``False``
+     - ``--exact``
+     - ``False`` for fuzzy matching, and ``True`` for exact matching.
+   * - ``extended``
+     - ``True``
+     - ``--extended``
+       ``--no-extended``
+     - ``True`` for extended-search mode.  ``False`` to turn it off.
 
-   Corresponds to ``-m``/``--multi`` option.
+       ``True`` corresponds to ``-x``/``--extended`` option, and
+       ``False`` corresponds to ``+x``/``--no-extended`` option.
+   * - ``header``
+     - ``None``
+     - ``--header``
+     - Sticky header printed below prompt.
+   * - ``mouse``
+     - ``True``
+     - ``--no-mouse``
+     -  ``False`` to disable mouse.
+   * - ``multi``
+     - ``False``
+     - ``--multi``
+     - ``True`` to let the user to choose more than one.  A user can select
+       items with tab/shift-tab.  If ``multi=True`` the function returns a list of
+       strings rather than a string.
 
-``bind``
-   The key/event bindings to pass to ``fzf``.
+       ``False`` to make a user possible to choose only one.  If ``multi=False``
+       it returns a string rather than a list.
 
-   Dictionary of the form {KEY: ACTION} or {EVENT: ACTION}.
+       For both modes, the function returns ``None`` if nothing is matched.
+   * - ``preview``
+     - ``None``
+     - ``--preview``
+     -
+   * - ``print_query``
+     - ``False``
+     - ``--print-query``
+     - If ``True`` the return type is a tuple where the first element is the query
+       the user actually typed, and the second element is the selected output as
+       described above and depending on the state of ``multi``.
 
-   Corresponds to ``--bind=KEYBINDS`` option.
+       *New in version 0.3.0.*
+   * - ``prompt``
+     - ``" >"``
+     - ``--prompt``
+     -
+   * - ``query``
+     - ``""`` (empty string)
+     - ``--query``
+     - The query string to be filled at first.  (It can be removed by a user.)
+   * - ``sort``
+     - ``False``
+     - ``--sort``
+     - Sorts the result if ``True``.  ``False`` by default.
+   * - ``__extra__``
+     - ``[]``
+     -
+     - The iterable of extra raw options/arguments to pass to ``fzf``.
 
-``print_query``
-   If ``True`` the return type is a tuple where the first element is the query
-   the user actually typed, and the second element is the selected output as
-   described above and depending on the state of ``multi``.
-
-   ``False`` by default.
-
-   Corresponds to ``--print-query`` option.
-
-   *New in version 0.3.0.*
-
-``encoding``
-   The text encoding name (e.g. ``'utf-8'``, ``'ascii'``) to be used for
-   encoding ``iterable`` values and decoding return values.  It's ignored
-   when the ``iterable`` values are byte strings.
-
-   The Python's default encoding (i.e. ``sys.getdefaultencoding()``) is used
-   by default.
-
-``extended``
-   ``True`` for extended-search mode.  ``False`` to turn it off.
-
-   ``True`` by default.
-
-   ``True`` corresponds to ``-x``/``--extended`` option, and
-   ``False`` corresponds to ``+x``/``--no-extended`` option.
-
-``exact``
-   ``False`` for fuzzy matching, and ``True`` for exact matching.
-
-   ``False`` by default.
-
-   Corresponds to ``-e``/``--exact`` option.
-
-``case_sensitive``
-   ``True`` for case sensitivity, and ``False`` for case insensitivity.
-   ``None``, the default, for smart-case match.
-
-   ``True`` corresponds to ``+i`` option and ``False`` corresponds to
-   ``-i`` option.
-
-``query``
-   The query string to be filled at first.  (It can be removed by a user.)
-
-   Empty string by default.
-
-   Corresponds to ``-q``/``--query`` option.
-
-``prompt``
-   The prompt sequence.  ``' >'`` by default.
-
-   Corresponds to ``--prompt`` option.
-
-``preview``
-   The preview command to execute.  ``None`` by default.
-
-   Corresponds to ``--preview`` option.
-
-``mouse``
-   ``False`` to disable mouse.  ``True`` by default.
-
-   Corresponds to ``--no-mouse`` option.
-
-``ansi``
-   ``True`` to enable ansi colors mode. ``None`` by default.
-
-   Corresponds to ``--ansi`` option.
-
-``cycle``
-   ``True`` to enable cycling scrolling.
-
-   ``False`` by default.
-
-   Corresponds to ``--cycle`` option.
-
-``__extra__``
-    The iterable of extra raw options/arguments to pass to ``fzf``.
-
-    Empty by default.
+       This is how you pass extra options that are not already defined
+       as keyword arguments.
 
 
 Author and license
@@ -212,7 +208,10 @@ Version 1.6.0.60.2
 
 To be released.  Bundles ``fzf`` `0.60.2`__.
 
+- Added ``header`` option.  [`#42`__ by Phred Lane]
+
 __ https://github.com/junegunn/fzf/releases/tag/v0.60.2
+__ https://github.com/dahlia/iterfzf/pull/42
 
 
 Version 1.5.0.60.2
