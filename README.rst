@@ -87,6 +87,11 @@ The following is the full list of parameters.  Pass them as
 
        ``True`` corresponds to ``+i`` option and ``False`` corresponds to
        ``-i`` option.
+   * - ``color``
+     - ``None``
+     - ``--color``
+     - Accepts color scheme name or a dictionary in the form of {element:
+       color}.
    * - ``cycle``
      - ``False``
      - ``--cycle``
