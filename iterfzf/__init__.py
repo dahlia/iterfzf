@@ -10,7 +10,7 @@ from typing import AnyStr, Iterable, Literal, Mapping, Optional
 __all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 
 __fzf_version__ = '0.60.3'
-__version__ = '1.6.' + __fzf_version__
+__version__ = '1.7.' + __fzf_version__
 
 POSIX_EXECUTABLE_NAME: Literal['fzf'] = 'fzf'
 WINDOWS_EXECUTABLE_NAME: Literal['fzf.exe'] = 'fzf.exe'
