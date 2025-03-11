@@ -23,6 +23,12 @@ BUNDLED_EXECUTABLE: Optional[Path] = \
 INTERRUPT_EXIT_CODE: int = 130
 
 
+def format_option(option: Mapping[str, str]) -> str:
+    return ','.join(
+        r"{}:{}".format(key, value) for key, value in option.items()
+    )
+
+
 def iterfzf(
     iterable: Iterable[AnyStr],
     *,
@@ -36,6 +42,7 @@ def iterfzf(
     multi: bool = False,
     mouse: bool = True,
     bind: Optional[Mapping[str, str]] = None,
+    color: Optional[Mapping[str, str]] = None,
     print_query: bool = False,
     # Layout:
     prompt: str = '> ',
@@ -63,10 +70,9 @@ def iterfzf(
     if not mouse:
         cmd.append('--no-mouse')
     if bind:
-        bind_options = ','.join(
-            r"{}:{}".format(key, action) for key, action in bind.items()
-        )
-        cmd.append('--bind=' + bind_options)
+        cmd.append('--bind=' + format_option(bind))
+    if color:
+        cmd.append('--color=' + format_option(color))
     if print_query:
         cmd.append('--print-query')
     if query:

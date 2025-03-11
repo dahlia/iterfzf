@@ -87,6 +87,13 @@ The following is the full list of parameters.  Pass them as
 
        ``True`` corresponds to ``+i`` option and ``False`` corresponds to
        ``-i`` option.
+   * - ``color``
+     - ``None``
+     - ``--color``
+     - Accepts color scheme name or a dictionary in the form of {element:
+       color}.
+
+       *New in version 1.6.0.*
    * - ``cycle``
      - ``False``
      - ``--cycle``
@@ -113,6 +120,8 @@ The following is the full list of parameters.  Pass them as
      - ``None``
      - ``--header``
      - Sticky header printed below prompt.
+
+       *New in version 1.6.0.*
    * - ``mouse``
      - ``True``
      - ``--no-mouse``
@@ -209,9 +218,11 @@ Version 1.6.0.60.2
 To be released.  Bundles ``fzf`` `0.60.2`__.
 
 - Added ``header`` option.  [`#42`__ by Phred Lane]
+- Added ``color`` option.  [`#43`__ by Phred Lane]
 
 __ https://github.com/junegunn/fzf/releases/tag/v0.60.2
 __ https://github.com/dahlia/iterfzf/pull/42
+__ https://github.com/dahlia/iterfzf/pull/43
 
 
 Version 1.5.0.60.2
