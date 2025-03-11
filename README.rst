@@ -60,25 +60,28 @@ The following is the full list of parameters.  Pass them as
    returns bytes.  If they are Unicode strings it returns Unicode strings.
    See also the ``encoding`` parameter.
 
-
-.. list-table:: Keyword Arguments
+.. list-table:: Keyword arguments
    :widths: 12 12 12 50
    :header-rows: 1
 
-   * - Keyword Arg
-     - Default Value
-     - CLI Param
+   * - Keyword
+     - Default
+     - CLI option
      - Description
    * - ``ansi``
      - ``None``
      - ``--ansi``
      - ``True`` to enable ansi colors mode.
+
+       *New in version 1.0.0.*
    * - ``bind``
      -
      - ``--bind``
      - The key/event bindings to pass to ``fzf``.
 
        Dictionary of the form {KEY: ACTION} or {EVENT: ACTION}.
+
+       *New in version 1.4.0.*
    * - ``case_sensitive``
      - ``None``
      - ``--smart-case``
@@ -98,6 +101,8 @@ The following is the full list of parameters.  Pass them as
      - ``False``
      - ``--cycle``
      - ``True`` to enable cycling scrolling.
+
+       *New in version 1.1.0.*
    * - ``encoding``
      - ``sys.getdefaultencoding()``
      - ``--encoding``
@@ -140,7 +145,7 @@ The following is the full list of parameters.  Pass them as
    * - ``preview``
      - ``None``
      - ``--preview``
-     -
+     - *New in version 0.5.0.*
    * - ``print_query``
      - ``False``
      - ``--print-query``
@@ -161,6 +166,8 @@ The following is the full list of parameters.  Pass them as
      - ``False``
      - ``--sort``
      - Sorts the result if ``True``.  ``False`` by default.
+
+       *New in version 1.3.0.*
    * - ``__extra__``
      - ``[]``
      -
@@ -168,6 +175,8 @@ The following is the full list of parameters.  Pass them as
 
        This is how you pass extra options that are not already defined
        as keyword arguments.
+
+       *New in version 1.1.0.*
 
 
 Author and license
