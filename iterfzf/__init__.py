@@ -49,6 +49,7 @@ def iterfzf(
     ansi: bool = False,
     header: str = '',
     preview: Optional[str] = None,
+    tmux: Optional[str|bool] = False,
     # Misc:
     query: str = '',
     cycle: bool = False,
@@ -79,6 +80,8 @@ def iterfzf(
         cmd.append('--query=' + query)
     if preview:
         cmd.append('--preview=' + preview)
+    if tmux:
+        cmd.append('--tmux' if tmux is bool else '--tmux={tmux}')
     if header:
         cmd.append('--header=' + header)
     if ansi:
