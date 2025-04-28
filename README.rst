@@ -150,7 +150,7 @@ The following is the full list of parameters.  Pass them as
      - ``None``
      - ``tmux[=OPTS]``
      - Start fzf in a tmux popup if ``tmux=True`` or the config string is provided (requires tmux 3.3+)
-       [center|top|bottom|left|right][,SIZE[%]][,SIZE[%]][,border-native] (default: center,50%)
+       ``[center|top|bottom|left|right][,SIZE[%]][,SIZE[%]][,border-native]`` (default: ``center,50%``)
    * - ``print_query``
      - ``False``
      - ``--print-query``
