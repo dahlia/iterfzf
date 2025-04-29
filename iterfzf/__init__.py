@@ -5,7 +5,7 @@ from os import fspath, PathLike
 from pathlib import Path
 import subprocess
 import sys
-from typing import AnyStr, Iterable, Literal, Mapping, Optional
+from typing import AnyStr, Iterable, Literal, Mapping, Optional, Union
 
 __all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
 
@@ -49,7 +49,7 @@ def iterfzf(
     ansi: bool = False,
     header: str = '',
     preview: Optional[str] = None,
-    tmux: Optional[str|bool] = False,
+    tmux: Optional[Union[str, bool]] = False,
     # Misc:
     query: str = '',
     cycle: bool = False,
