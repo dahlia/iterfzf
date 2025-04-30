@@ -81,7 +81,7 @@ def iterfzf(
     if preview:
         cmd.append('--preview=' + preview)
     if tmux:
-        cmd.append('--tmux' if tmux is bool else '--tmux={tmux}')
+        cmd.append('--tmux' if tmux is bool else f'--tmux={tmux}')
     if header:
         cmd.append('--header=' + header)
     if ansi:
