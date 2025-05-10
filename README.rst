@@ -235,7 +235,7 @@ is 3.4.5.
 Version 1.7.0.62.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.62.0`__.
+Released on May 10, 2025.  Bundles ``fzf`` `0.62.0`__.
 
 - Added ``tmux`` option.  [`#44`__ by Peter Rebrun]
 
