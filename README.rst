@@ -232,14 +232,14 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 1.7.0.60.3
+Version 1.7.0.62.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.60.3`__.
+To be released.  Bundles ``fzf`` `0.62.0`__.
 
 - Added ``tmux`` option.  [`#44`__ by Peter Rebrun]
 
-__ https://github.com/junegunn/fzf/releases/tag/v0.60.3
+__ https://github.com/junegunn/fzf/releases/tag/v0.62.0
 __ https://github.com/dahlia/iterfzf/pull/44
 
 
