@@ -168,6 +168,11 @@ The following is the full list of parameters.  Pass them as
      - Sorts the result if ``True``.  ``False`` by default.
 
        *New in version 1.3.0.*
+   * - ``tmux``
+     - ``False``
+     - ``tmux[=OPTS]``
+     - Start fzf in a tmux popup if ``tmux=True`` or the config string is provided (requires tmux 3.3+)
+       ``[center|top|bottom|left|right][,SIZE[%]][,SIZE[%]][,border-native]`` (default: ``center,50%``)
    * - ``__extra__``
      - ``[]``
      -

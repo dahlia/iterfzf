@@ -69,3 +69,23 @@ class IterFzfTest(unittest.TestCase):
             KeyboardInterrupt,
             lambda: iterfzf.iterfzf(flavors, executable="fzf"),
         )
+
+    def test_support_tmux_bool(self):
+        choice = iterfzf.iterfzf(
+            flavors,
+            query="Vani",
+            __extra__=["-1"],
+            executable="fzf",
+            tmux=True,
+        )
+        self.assertEqual("Vanilla", choice)
+
+    def test_support_tmux_str(self):
+        choice = iterfzf.iterfzf(
+            flavors,
+            query="Vani",
+            __extra__=["-1"],
+            executable="fzf",
+            tmux="top,60%",
+        )
+        self.assertEqual("Vanilla", choice)
