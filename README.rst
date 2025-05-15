@@ -235,7 +235,7 @@ is 3.4.5.
 Version 1.8.0.62.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.  Bundles ``fzf`` `0.62.0`__.
+Released on May 15, 2025.  Bundles ``fzf`` `0.62.0`__.
 
 - Fixed an error when the ``iterfzf()`` function was invoked with
   the ``tmux=True`` option. [`#45`__ by Peter Rebrun]
