@@ -242,15 +242,15 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
-Version 1.9.0.62.0
+Version 1.9.0.67.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.   Bundles ``fzf`` `0.62.0`__.
+To be released.   Bundles ``fzf`` `0.67.0`__.
 
 - Added ``read0`` option for processing multi-line items using NUL character
   separation.  [`#46`__]
 
-__ https://github.com/junegunn/fzf/releases/tag/v0.62.0
+__ https://github.com/junegunn/fzf/releases/tag/v0.67.0
 __ https://github.com/dahlia/iterfzf/issues/46
 
 
