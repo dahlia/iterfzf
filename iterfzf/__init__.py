@@ -7,24 +7,23 @@ import subprocess
 import sys
 from typing import AnyStr, Iterable, Literal, Mapping, Optional, Union
 
-__all__ = '__fzf_version__', '__version__', 'BUNDLED_EXECUTABLE', 'iterfzf'
+__all__ = "__fzf_version__", "__version__", "BUNDLED_EXECUTABLE", "iterfzf"
 
-__fzf_version__ = '0.62.0'
-__version__ = '1.9.' + __fzf_version__
+__fzf_version__ = "0.62.0"
+__version__ = "1.9." + __fzf_version__
 
-POSIX_EXECUTABLE_NAME: Literal['fzf'] = 'fzf'
-WINDOWS_EXECUTABLE_NAME: Literal['fzf.exe'] = 'fzf.exe'
-EXECUTABLE_NAME: Literal['fzf', 'fzf.exe'] = \
-    WINDOWS_EXECUTABLE_NAME \
-    if sys.platform == 'win32' \
-    else POSIX_EXECUTABLE_NAME
-BUNDLED_EXECUTABLE: Optional[Path] = \
-    Path(__file__).parent / EXECUTABLE_NAME
+POSIX_EXECUTABLE_NAME: Literal["fzf"] = "fzf"
+WINDOWS_EXECUTABLE_NAME: Literal["fzf.exe"] = "fzf.exe"
+EXECUTABLE_NAME: Literal["fzf", "fzf.exe"] = (
+    WINDOWS_EXECUTABLE_NAME
+    if sys.platform == "win32" else POSIX_EXECUTABLE_NAME
+)
+BUNDLED_EXECUTABLE: Optional[Path] = Path(__file__).parent / EXECUTABLE_NAME
 INTERRUPT_EXIT_CODE: int = 130
 
 
 def format_option(option: Mapping[str, str]) -> str:
-    return ','.join(
+    return ",".join(
         r"{}:{}".format(key, value) for key, value in option.items()
     )
 
@@ -45,69 +44,80 @@ def iterfzf(
     color: Optional[Mapping[str, str]] = None,
     print_query: bool = False,
     # Layout:
-    prompt: str = '> ',
+    prompt: str = "> ",
     ansi: bool = False,
-    header: str = '',
+    header: str = "",
     preview: Optional[str] = None,
     tmux: Optional[Union[str, bool]] = False,
     # Misc:
-    query: str = '',
+    read0: bool = False,
+    query: str = "",
     cycle: bool = False,
     __extra__: Iterable[str] = (),
     encoding: Optional[str] = None,
-    executable: PathLike = BUNDLED_EXECUTABLE or EXECUTABLE_NAME
+    executable: PathLike = BUNDLED_EXECUTABLE or EXECUTABLE_NAME,
 ):
-    cmd = [fspath(executable), '--prompt=' + prompt]
+    cmd = [fspath(executable), "--prompt=" + prompt]
     if not sort:
-        cmd.append('--no-sort')
+        cmd.append("--no-sort")
     if not extended:
-        cmd.append('--no-extended')
+        cmd.append("--no-extended")
     if case_sensitive is not None:
-        cmd.append('+i' if case_sensitive else '-i')
+        cmd.append("+i" if case_sensitive else "-i")
     if exact:
-        cmd.append('--exact')
+        cmd.append("--exact")
     if multi:
-        cmd.append('--multi')
+        cmd.append("--multi")
     if not mouse:
-        cmd.append('--no-mouse')
+        cmd.append("--no-mouse")
     if bind:
-        cmd.append('--bind=' + format_option(bind))
+        cmd.append("--bind=" + format_option(bind))
     if color:
-        cmd.append('--color=' + format_option(color))
+        cmd.append("--color=" + format_option(color))
     if print_query:
-        cmd.append('--print-query')
+        cmd.append("--print-query")
     if query:
-        cmd.append('--query=' + query)
+        cmd.append("--query=" + query)
     if preview:
-        cmd.append('--preview=' + preview)
+        cmd.append("--preview=" + preview)
     if tmux:
-        cmd.append('--tmux' if tmux is True else f'--tmux={tmux}')
+        cmd.append("--tmux" if tmux is True else f"--tmux={tmux}")
     if header:
-        cmd.append('--header=' + header)
+        cmd.append("--header=" + header)
     if ansi:
-        cmd.append('--ansi')
+        cmd.append("--ansi")
+    if read0:
+        cmd.append("--read0")
+        cmd.append("--print0")
     if cycle:
-        cmd.append('--cycle')
+        cmd.append("--cycle")
     if __extra__:
         cmd.extend(__extra__)
     encoding = encoding or sys.getdefaultencoding()
     proc = None
     stdin = None
     byte = None
-    lf = u'\n'
-    cr = u'\r'
+    lf = "\n"
+    cr = "\r"
     for line in iterable:
         if byte is None:
             byte = isinstance(line, bytes)
             if byte:
-                lf = b'\n'
-                cr = b'\r'
+                lf = b"\n"
+                cr = b"\r"
         elif isinstance(line, bytes) is not byte:
             raise ValueError(
-                'element values must be all byte strings or all '
-                'unicode strings, not mixed of them: ' + repr(line)
+                "element values must be all byte strings or all "
+                "unicode strings, not mixed of them: " + repr(line)
             )
-        if lf in line or cr in line:
+        if read0:
+            nul = b"\0" if byte else "\0"
+            if nul in line:
+                raise ValueError(
+                    r"element values must not contain NUL({1!r}) "
+                    r"in read0 mode: {0!r}".format(line, nul)
+                )
+        elif lf in line or cr in line:
             raise ValueError(
                 r"element values must not contain CR({1!r})/"
                 r"LF({2!r}): {0!r}".format(line, cr, lf)
@@ -123,7 +133,7 @@ def iterfzf(
         if not byte:
             line = line.encode(encoding)
         try:
-            stdin.write(line + b'\n')
+            stdin.write(line + (b"\0" if read0 else b"\n"))
             stdin.flush()
         except IOError as e:
             if e.errno != errno.EPIPE and errno.EPIPE != 32:
@@ -145,7 +155,13 @@ def iterfzf(
             return None
     stdout = proc.stdout
     decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    output = [decode(ln.strip(b'\r\n\0')) for ln in iter(stdout.readline, b'')]
+    if read0:
+        raw = stdout.read()
+        output = [decode(item) for item in raw.split(b"\0") if item]
+    else:
+        output = [
+            decode(ln.strip(b"\r\n\0")) for ln in iter(stdout.readline, b"")
+        ]
     if print_query:
         try:
             if multi:

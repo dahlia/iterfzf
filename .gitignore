@@ -1,6 +1,7 @@
 *.egg-info/
 *.pyc
 .*.swp
+.claude/settings.local.json
 .mypy_cache/
 .tox/
 __pycache__/

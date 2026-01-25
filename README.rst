@@ -162,6 +162,16 @@ The following is the full list of parameters.  Pass them as
      - ``""`` (empty string)
      - ``--query``
      - The query string to be filled at first.  (It can be removed by a user.)
+   * - ``read0``
+     - ``False``
+     - ``--read0``
+       ``--print0``
+     - ``True`` to enable NUL character (``\0``) separated I/O for processing
+       multi-line items.  When enabled, items may contain newlines (CR/LF), but
+       must not contain NUL characters.  Both ``--read0`` (for input) and
+       ``--print0`` (for output) are passed to ``fzf``.
+
+       *New in version 1.9.0.*
    * - ``sort``
      - ``False``
      - ``--sort``
@@ -237,7 +247,11 @@ Version 1.9.0.62.0
 
 To be released.   Bundles ``fzf`` `0.62.0`__.
 
+- Added ``read0`` option for processing multi-line items using NUL character
+  separation.  [`#46`__]
+
 __ https://github.com/junegunn/fzf/releases/tag/v0.62.0
+__ https://github.com/dahlia/iterfzf/issues/46
 
 
 Version 1.8.0.62.0
