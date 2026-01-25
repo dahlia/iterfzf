@@ -245,7 +245,7 @@ is 3.4.5.
 Version 1.9.0.67.0
 ~~~~~~~~~~~~~~~~~~
 
-To be released.   Bundles ``fzf`` `0.67.0`__.
+Released on January 25, 2026.   Bundles ``fzf`` `0.67.0`__.
 
 - Added ``read0`` option for processing multi-line items using NUL character
   separation.  [`#46`__]
