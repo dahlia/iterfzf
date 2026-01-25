@@ -242,6 +242,14 @@ is 3.4.5.
 .. _Semantic Versioning: http://semver.org/
 
 
+Version 1.10.0.67.0
+~~~~~~~~~~~~~~~~~~~
+
+To be released.  Bundles ``fzf`` `0.67.0`__.
+
+__ https://github.com/junegunn/fzf/releases/tag/v0.67.0
+
+
 Version 1.9.0.67.0
 ~~~~~~~~~~~~~~~~~~
 
