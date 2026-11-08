@@ -144,24 +144,38 @@ def iterfzf(
     except IOError as e:
         if e.errno != errno.EPIPE and errno.EPIPE != 32:
             raise
-    exit_code = proc.wait() if proc else -1
-    if exit_code == INTERRUPT_EXIT_CODE:
-        raise KeyboardInterrupt()
+    active_exception = False
+    try:
+        exit_code = proc.wait() if proc else -1
+        if exit_code == INTERRUPT_EXIT_CODE:
+            raise KeyboardInterrupt()
 
-    if exit_code not in [0, 1]:
-        if print_query:
-            return None, None
+        if exit_code not in [0, 1]:
+            if print_query:
+                return None, None
+            else:
+                return None
+        stdout = proc.stdout
+        decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
+        if read0:
+            raw = stdout.read()
+            output = [decode(item) for item in raw.split(b"\0") if item]
         else:
-            return None
-    stdout = proc.stdout
-    decode = (lambda b: b) if byte else (lambda t: t.decode(encoding))
-    if read0:
-        raw = stdout.read()
-        output = [decode(item) for item in raw.split(b"\0") if item]
-    else:
-        output = [
-            decode(ln.strip(b"\r\n\0")) for ln in iter(stdout.readline, b"")
-        ]
+            output = [
+                decode(ln.strip(b"\r\n\0"))
+                for ln in iter(stdout.readline, b"")
+            ]
+    except BaseException:
+        active_exception = True
+        raise
+    finally:
+        if proc:
+            try:
+                proc.stdout.close()
+            except OSError:
+                # Preserve errors from waiting for or reading the subprocess.
+                if not active_exception:
+                    raise
     if print_query:
         try:
             if multi:
