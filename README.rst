@@ -247,7 +247,11 @@ Version 1.10.0.67.0
 
 To be released.  Bundles ``fzf`` `0.67.0`__.
 
+- Close the subprocess output pipe after reading the selection, including
+  no-match results and interrupted or failed selections.  [`#48`__]
+
 __ https://github.com/junegunn/fzf/releases/tag/v0.67.0
+__ https://github.com/dahlia/iterfzf/issues/48
 
 
 Version 1.9.0.67.0
